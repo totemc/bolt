@@ -32,11 +32,15 @@
 .task-wrapper{
 	height: 80px;
 	overflow: hidden;
-	background-color: rgba(0, 255, 23, 0.28);
+	/*background-color: rgba(23, 43, 182, 0.69);*/
+  margin: 5px 5px !important;
+  box-shadow: 2px 4px 2px #888888;
+  border-radius: 4px;
 }
 .task-picture-wrapper{
   height: 100%;
   display: table;
+
 
 }
 .task-picture{
@@ -57,6 +61,8 @@
 .price{
 	display: table-cell;
 	vertical-align: middle;
+  font-size: 2em;
+  font-weight: 600;
 }
 .description-wrapper{
 	height: 100%;
@@ -69,14 +75,28 @@
 .icon-size{
 	font-size: 1.5em;
 }
+.task-link{
+  color: unset !important;
+}
 
 /*Colors for Categories*/
 .pickup{
-	background-color: green;
+	background-color: rgba(23, 43, 182, 0.69);
 }
 .chores{
-	background-color: gray;
+	background-color: rgba(85, 182, 23, 0.69);
 }
 .technical{
-	background-color: red;
+	background-color: rgba(29, 176, 190, 0.69);
+}
+
+
+/*Styles used later on for task cards*/
+.card-title{
+  font-size: 2em;
+  text-align: center;
+  padding: 8px 0px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: red;
 }

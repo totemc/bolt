@@ -49,8 +49,8 @@ angular.module('starter.controllers', [])
   
   obj.set('user_id',0);
   obj.set('amount', "50$");
-  obj.set('employer-rating', "4.2");
-  obj.set('category', "Pickup");
+  obj.set('employer_rating', "4.2");
+  obj.set('category', "pickup");
   obj.set('image',"https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_March_2010-1.jpg");
   obj.set('title', "Pick up dry cleaners");
   obj.set('status', "inProgress");
@@ -75,35 +75,6 @@ angular.module('starter.controllers', [])
   });
 
 
-  $scope.inProgressList = [
-    {
-      title: "Pick up dry cleaners",
-      status: "inProgress",
-      desc: "Get my suit",
-      id: 0
-    }
-  ];
-
-  $scope.completedList = [
-    {
-      title: "Pick up dry cleaners",
-      status: "complete",
-      desc: "",
-      id: 0
-    },
-    {
-      title: "Groceries",
-      status: "complete",
-      desc: "",
-      id: 1
-    },
-    {
-      title: "Deposit Check",
-      status: "complete",
-      desc: "",
-      id: 2
-    }
-  ];
 
   // Render modal
   $ionicModal.fromTemplateUrl('templates/addTaskModal.html', {
@@ -166,6 +137,42 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
+// Controller for task-onclick  
+.controller('taskOnClick', function($scope, $location, $state, $stateParams) {
+  $scope.showTask = $stateParams.id;
+  var holdme = $scope.showTask;
+  $scope.singleTask =[];
+  $scope.showme;
+  console.log(holdme);
+  var query = new Parse.Query('boltTask');
+  query.get(holdme, {
+    success: function(object) {
+      console.log("eyo")
+      $scope.singleTask.push(object);
+      $scope.showme = [{
+        "desc": object.get("desc"),
+        "title": object.get("title"),
+        "amount": object.get("amount"),
+        "employer": object.get("employer_rating"),
+        "user": object.get("user")
+      }]
+      console.log(object.get("title"));
+      console.log($scope.showme);
+    },
+
+    error: function(object, error) {
+      // error is an instance of Parse.Error.
+      console.log("nahman");
+    }
+  });
+
+
+
+
+
+})
+
+// Get the Tasks
 .controller('EmployeeCtrl', function($scope, $stateParams){
   var allTasks = [];
   var query = new Parse.Query('boltTask');
