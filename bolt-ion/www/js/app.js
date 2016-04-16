@@ -112,12 +112,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
-  .state('employee.task',{
-    url: '/task:id',
+  .state('tab.task',{
+    url: '/task/:id',
     views:{
-      'employee.home':{
-        templateUrl: 'templates/employee-tasks.html',
-        controller: 'TaskCtrl'
+      'tab-dash':{
+        templateUrl: 'templates/show-task.html',
+        controller: 'taskOnClick'
       }
     }
   });
