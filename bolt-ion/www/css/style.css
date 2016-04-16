@@ -37,12 +37,11 @@
 	position: relative;
 	left: 50%;
 	transform: translateX(-50%);
-	margin-top: 10px;
+	margin-top: 10px !important;
   margin-bottom: 10px;
 }
 .task-picture-wrapper{
   height: 100%;
-  position: relative;
 }
 .task-picture{
 	border-radius: 50%;
