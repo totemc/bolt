@@ -1,0 +1,21 @@
+<ion-modal-view>    
+    <ion-header-bar>
+        <div class="buttons">
+            <button class="button button-clear" type="button" ng-click="closeNewTask()">Close</button>
+        </div>
+        <h1 class="title">Add task</h1>
+        <div class="buttons">
+           <button class="button button-clear" type="button" ng-click="saveNewTask(item)">Save</button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Title</span>
+            <input type="text" ng-model="newTask.title" placeholder="Pick up groceries, deposit my check...">
+        </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Description</span>
+            <input type="text" placeholder="Looking for someone to pick up my suit...">
+        </label>
+    </ion-content>
+</ion-modal-view>
