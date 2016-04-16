@@ -1,6 +1,104 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('tasks-homeCtrl', function($scope, $location, $state, $ionicModal) {
+
+  var obj = new Parse.Object('boltTask');
+  
+  obj.set('user_id',0);
+  obj.set('title', "Pick up dry cleaners");
+  obj.set('status', "inProgress");
+  obj.set('desc',"Pick up my suit");
+
+  obj.save().then(function(obj) {}, function(err) { console.log(err); });  
+
+  var query = new Parse.Query('boltTask');
+  query.find({
+    success: function(results) {
+      console.log("Successfully retrieved " + results.length);
+
+      // Do something with the returned Parse.Object values
+      for (var i = 0; i < results.length; i++) {
+        var obj = results[i];
+        console.log(obj);
+      }
+    },
+    error: function(error) {
+    console.log("Error: " + error.code + " " + error.message);
+    }
+  });
+
+
+  $scope.inProgressList = [
+    {
+      title: "Pick up dry cleaners",
+      status: "inProgress",
+      desc: "Get my suit",
+      id: 0
+    }
+  ];
+
+  $scope.completedList = [
+    {
+      title: "Pick up dry cleaners",
+      status: "complete",
+      desc: "",
+      id: 0
+    },
+    {
+      title: "Groceries",
+      status: "complete",
+      desc: "",
+      id: 1
+    },
+    {
+      title: "Deposit Check",
+      status: "complete",
+      desc: "",
+      id: 2
+    }
+  ];
+
+  // Render modal
+  $ionicModal.fromTemplateUrl('templates/addTaskModal.html', {
+      focusFirstInput: true,
+      scope: $scope
+  }).then(function(modal) {
+      $scope.modal = modal;
+  });
+
+  $scope.goToTaskDetail = function (item){
+    console.log(item);
+    $location.path('/tab/task-detail-view/'+item.id);
+  }
+
+  $scope.addNewTask = function(){
+    $scope.modal.show();
+    $scope.newTask = [
+      {
+        title: "",
+        status: "",
+        desc: "",
+        id: 0
+      }
+    ];
+  }
+
+  $scope.closeNewTask = function(){
+    $scope.modal.hide();
+  }
+
+  $scope.saveNewTask = function(item){
+    console.log($scope.newTask);
+  }
+
+})
+
+.controller('tasks-detail-view-Ctrl', function($scope, $location, $state, $stateParams) {
+
+  $scope.currentItemId = $stateParams.id;
+  
+})
+
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

@@ -20,6 +20,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    // Parse init
+    Parse.initialize('bITe9JdTa9kiEgQh75stTuoKCFRqq2aGzUBTMbLC','unused');
+    Parse.serverURL = 'https://bolt-2.herokuapp.com/parse';
   });
 })
 
@@ -45,10 +49,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     views: {
       'tab-dash': {
         templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+        controller: 'tasks-homeCtrl'
       }
     }
   })
+
+  .state('tab.task-detail-view', {
+    url: '/task-detail-view/:id',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/task-detail-view.html',
+        controller: 'tasks-detail-view-Ctrl'
+      }
+    }
+  })
+
 
   .state('tab.chats', {
       url: '/chats',
