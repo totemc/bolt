@@ -7,8 +7,17 @@ angular.module('starter.controllers', [])
   user.set("username", "martin");
   user.set("password", "password");
   user.set("rating", 3);
+  user.set("balance", 100);
   user.set("bio", "I'm a full-stack web developer at Florida International University, studying computer science. I enjoy running, playing soccer, and building webapps. Feel free to contact me in case you have any questions about my Bolt tasks!");
+  user.set("image", "martin.jpg");
+  // create Parse dummy user
+  // var user = new Parse.User();
+  // user.set("username", "jaime");
+  // user.set("password", "password");
+  // user.set("rating", 3);
+  // user.set("balance", 100);
 
+  // user.set("bio", "I'm a full-stack web developer");
   // user.signUp(null, {
   //   success: function(user) {
   //     // Hooray! Let them use the app now.
@@ -45,65 +54,58 @@ angular.module('starter.controllers', [])
 
 .controller('tasks-homeCtrl', function($scope, $location, $state, $ionicModal) {
 
-  var obj = new Parse.Object('boltTask');
   
-  obj.set('user_id',0);
-  obj.set('amount', "50$");
-  obj.set('employer-rating', "4.2");
-  obj.set('category', "Pickup");
-  obj.set('image',"https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_March_2010-1.jpg");
-  obj.set('title', "Pick up dry cleaners");
-  obj.set('status', "inProgress");
-  obj.set('desc',"Pick up my suit");
 
-  obj.save().then(function(obj) {}, function(err) { console.log(err); });  
+  // obj is the new task to be saved to db
+  var obj = new Parse.Object('boltTask');
 
-  var query = new Parse.Query('boltTask');
-  query.find({
-    success: function(results) {
-      console.log("Successfully retrieved " + results.length);
+  // Render task list
+  $scope.$on('$ionicView.beforeEnter', function () {
+      console.log("before enter");
+      $scope.redraw();   
+  })
 
-      // Do something with the returned Parse.Object values
-      for (var i = 0; i < results.length; i++) {
-        var obj = results[i];
-        console.log(obj);
+  $scope.$on('$ionicView.enter', function (){
+      console.log("enter")
+  })
+
+  $scope.redraw = function(){
+    $scope.taskList = [];
+    var query = new Parse.Query('boltTask');
+    query.equalTo("user", Parse.User.current().get('username'));
+    query.find({
+      success: function(results) {
+        console.log("Successfully retrieved " + results.length + " tasks");
+        // Do something with the returned Parse.Object values
+        for (var i = 0; i < results.length; i++) {
+          var obj = results[i];
+          $scope.taskList.push(obj);
+        }
+        console.log($scope.taskList);
+      },
+      error: function(error) {
+      console.log("Error: " + error.code + " " + error.message);
       }
-    },
-    error: function(error) {
-    console.log("Error: " + error.code + " " + error.message);
-    }
-  });
+    }); 
+  }
 
-
-  $scope.inProgressList = [
-    {
-      title: "Pick up dry cleaners",
-      status: "inProgress",
-      desc: "Get my suit",
-      id: 0
+  $scope.inProgressFilter = function(item){
+    if(item.get('status') == 'inProgress'){
+      return true;
+    } 
+    else {
+      return false;
     }
-  ];
+  }
 
-  $scope.completedList = [
-    {
-      title: "Pick up dry cleaners",
-      status: "complete",
-      desc: "",
-      id: 0
-    },
-    {
-      title: "Groceries",
-      status: "complete",
-      desc: "",
-      id: 1
-    },
-    {
-      title: "Deposit Check",
-      status: "complete",
-      desc: "",
-      id: 2
+  $scope.completedFilter = function(item){
+    if(item.get('status') == 'inProgress'){
+      return false;
+    } 
+    else {
+      return true;
     }
-  ];
+  }
 
   // Render modal
   $ionicModal.fromTemplateUrl('templates/addTaskModal.html', {
@@ -114,36 +116,87 @@ angular.module('starter.controllers', [])
   });
 
   $scope.goToTaskDetail = function (item){
-    console.log(item);
     $location.path('/tab/task-detail-view/'+item.id);
   }
 
-  $scope.addNewTask = function(){
-    $scope.modal.show();
-    $scope.newTask = [
-      {
-        title: "",
-        status: "",
-        desc: "",
-        id: 0
-      }
-    ];
-  }
-
-  $scope.closeNewTask = function(){
+  $scope.closeNewTask = function (){
     $scope.modal.hide();
   }
 
-  $scope.saveNewTask = function(item){
+  $scope.addNewTask = function(){
+
+    // create empty new task
+    $scope.newTask = {
+      user_id: Parse.User.current().get('username'),
+      amount: '',
+      employer_rating: '',
+      category: '',
+      image: '',
+      title: '',
+      status: 'inProgress',
+      desc: ''
+    };
+
+    $scope.modal.show();
+
+  }
+
+  $scope.saveNewTask = function(){
+
+    console.log("About to save newtask:");
+
     console.log($scope.newTask);
+
+    obj.set('user', $scope.newTask.user_id);
+    obj.set('amount', $scope.newTask.amount);
+    obj.set('employer_rating', $scope.newTask.employer_rating);
+    obj.set('category', $scope.newTask.category);
+    obj.set('image',$scope.newTask.image);
+    obj.set('title', $scope.newTask.title);
+    obj.set('status', $scope.newTask.status);
+    obj.set('desc', $scope.newTask.desc);
+
+    obj.save().then(function(obj) {
+      console.log("New task saved successfully.");
+      console.log(obj);
+    }, function(err) {
+      console.log(err); 
+    }); 
+    $scope.modal.hide();
+    $scope.redraw();
   }
 
 })
 
 .controller('tasks-detail-view-Ctrl', function($scope, $location, $state, $stateParams) {
 
-  $scope.currentItemId = $stateParams.id;
-  
+  $scope.$on('$ionicView.beforeEnter', function () {
+      var query = new Parse.Query('boltTask');
+      query.equalTo("_id", $stateParams.id);
+      query.find({
+        success: function(results) {
+          console.log("Successfully retrieved " + results.length + " tasks");
+          // Do something with the returned Parse.Object values
+          for (var i = 0; i < results.length; i++) {
+            var obj = results[i];
+            $scope.currentItem = {
+                user_id: Parse.User.current().get('username'),
+                amount: obj.get('amount'),
+                employer_rating: obj.get('employer_rating'),
+                category: obj.get('category'),
+                image: obj.get('image'),
+                title: obj.get('title'),
+                status: obj.get('status'),
+                desc: obj.get('desc')
+              };
+          }
+        },
+        error: function(error) {
+        console.log("Error: " + error.code + " " + error.message);
+        }
+      });          
+  })
+         
 })
 
 
