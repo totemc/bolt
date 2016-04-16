@@ -1,5 +1,48 @@
 angular.module('starter.controllers', [])
 
+.controller('LoginCtrl', function($scope, $stateParams, $state) {
+
+  // create Parse dummy user
+  var user = new Parse.User();
+  user.set("username", "martin");
+  user.set("password", "password");
+  user.set("rating", 3);
+  user.set("bio", "I'm a full-stack web developer at Florida International University, studying computer science. I enjoy running, playing soccer, and building webapps. Feel free to contact me in case you have any questions about my Bolt tasks!");
+
+  // user.signUp(null, {
+  //   success: function(user) {
+  //     // Hooray! Let them use the app now.
+  //     console.log(user);
+  //     console.log("Sign up successful")
+  //   },
+  //   error: function(user, error) {
+  //     // Show the error message somewhere and let the user try again.
+  //     console.log("Error: " + error.code + " " + error.message);
+  //   }
+  // });
+
+  $scope.loginData = {
+    username: "",
+    password: ""
+  };
+
+  $scope.loadView = function(){
+    Parse.User.logIn($scope.loginData.username, $scope.loginData.password, {
+      success: function(user) {
+        // Do stuff after successful login.
+        console.log(user);
+        console.log("success");
+        $state.go('tab.dash');
+      },
+      error: function(user, error) {
+        // The login failed. Check error to see why.
+        console.log(error);
+      }
+    });
+  }
+
+})
+
 .controller('tasks-homeCtrl', function($scope, $location, $state, $ionicModal) {
 
   var obj = new Parse.Object('boltTask');
@@ -120,6 +163,18 @@ angular.module('starter.controllers', [])
 })
 
 .controller('EmployeeCtrl', function($scope, $stateParams){
+
+})
+
+.controller('profileCtrl', function($scope, $stateParams){
+
+  $scope.currentUser = Parse.User.current();
+  
+  if ($scope.currentUser) {
+      console.log('current user');
+  } else {
+      console.log("Not current user");
+  }
 
 })
 
