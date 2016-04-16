@@ -1,13 +1,6 @@
 angular.module('starter.services', [])
 
 
-.factory('User', function() {
- 
-  var currentUser = Parse.User.current();
-
-  
-
-};
 
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array

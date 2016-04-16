@@ -19,7 +19,6 @@ $dark:                            #444 !default;
   position: absolute;
   right: 3%; }
 
-
 .title {
   text-align: center; }
 
@@ -7089,7 +7088,6 @@ th.hide-for-touch {
     display: table-cell !important; }
   th.show-for-print {
     display: table-cell !important; } }
-
 
 .profile-photo-wrapper {
   position: relative;
