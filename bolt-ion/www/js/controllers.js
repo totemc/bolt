@@ -21,8 +21,8 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('EmployeeCtrl', function($scope){
-  
+.controller('EmployeeCtrl', function($scope, $stateParams){
+
 })
 
 
