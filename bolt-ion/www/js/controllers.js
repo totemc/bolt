@@ -5,6 +5,10 @@ angular.module('starter.controllers', [])
   var obj = new Parse.Object('boltTask');
   
   obj.set('user_id',0);
+  obj.set('amount', "50$");
+  obj.set('employer-rating', "4.2");
+  obj.set('category', "Pickup");
+  obj.set('image',"https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_March_2010-1.jpg");
   obj.set('title', "Pick up dry cleaners");
   obj.set('status', "inProgress");
   obj.set('desc',"Pick up my suit");
@@ -120,6 +124,29 @@ angular.module('starter.controllers', [])
 })
 
 .controller('EmployeeCtrl', function($scope, $stateParams){
+  var allTasks = [];
+  var query = new Parse.Query('boltTask');
+  query.find({
+    success: function(results) {
+      console.log("Successfully retrieved " + results.length);
+
+      // Do something with the returned Parse.Object values
+      for (var i = 0; i < results.length; i++) {
+        var obj = results[i];
+        allTasks.push(results[i]);
+        console.log();
+
+      }
+      console.log(allTasks);
+      $scope.taskz = allTasks;
+      
+    },
+    error: function(error) {
+    console.log("Error: " + error.code + " " + error.message);
+    }
+  });
+  
+  console.log("priting");
 
 })
 

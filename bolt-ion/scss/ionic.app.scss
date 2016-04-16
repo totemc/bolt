@@ -20,6 +20,8 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Custom stylesheets
 @import 'tasks-home';
+@import 'employee-tasks';
+@import 'buttons';
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
