@@ -20,6 +20,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    // Parse init
+    Parse.initialize('bITe9JdTa9kiEgQh75stTuoKCFRqq2aGzUBTMbLC','unused');
+    Parse.serverURL = 'https://bolt-2.herokuapp.com/parse';
   });
 })
 
@@ -39,16 +43,35 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   // Each tab has its own nav history stack:
+  
+  .state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: 'LoginCtrl'
+      
+  })
+          
 
   .state('tab.dash', {
     url: '/dash',
     views: {
       'tab-dash': {
         templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+        controller: 'tasks-homeCtrl'
       }
     }
   })
+
+  .state('tab.task-detail-view', {
+    url: '/task-detail-view/:id',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/task-detail-view.html',
+        controller: 'tasks-detail-view-Ctrl'
+      }
+    }
+  })
+
 
   .state('tab.chats', {
       url: '/chats',
@@ -73,13 +96,33 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/account',
     views: {
       'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+        templateUrl: 'templates/profile.html',
+        controller: 'profileCtrl'
+      }
+    }
+  })
+
+  .state('tab.employee-home',{
+    url: '/home',
+    views:{
+      'tab-dash':{
+        templateUrl: 'templates/employee-tasks.html',
+        controller: 'EmployeeCtrl'
+      }
+    }
+  })
+
+  .state('employee.task',{
+    url: '/task:id',
+    views:{
+      'employee.home':{
+        templateUrl: 'templates/employee-tasks.html',
+        controller: 'TaskCtrl'
       }
     }
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/login');
 
 });

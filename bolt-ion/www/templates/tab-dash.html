@@ -1,20 +1,17 @@
-<ion-view view-title="Login">
+<ion-view view-title="Tasks">
+  <ion-nav-buttons side="right">
+      <a class="button button-icon icon ion-plus" ng-click="addNewTask()"></a>
+    </ion-nav-buttons>
   <ion-content class="padding">
-    <h2 class="title">Login to Get Started</h2>
-    <div class="list">
-      <label class="item item-input">
-        <span class="input-label">Username</span>
-        <input type="text">
-      </label>
-      <label class="item item-input">
-        <span class="input-label">Password</span>
-        <input type="password">
-      </label>
-    </div>
-      <div class="login-button-wrapper">
-        <button class="login-button">
-          Login
-        </button>
-      </div>
+  <h2>In progress</h2>
+
+    <ul class="list tasks-in-progress">
+      <li ng-repeat="item in inProgressList" ng-click="goToTaskDetail({{item}})"  class="item">{{item.title}}<i class="ion-chevron-right"></i></li>
+    </ul>
+
+    <h2>Completed</h2>
+    <ul class="list tasks-completed">
+      <li ng-repeat="item in completedList" ng-click="goToTaskDetail({{item}})" class="item">{{item.title}}<i class="ion-chevron-right"></i></li>
+    </ul>
   </ion-content>
 </ion-view>
