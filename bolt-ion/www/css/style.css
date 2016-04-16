@@ -26,3 +26,46 @@
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+.content-start{
+	padding-top: 43px;
+}
+.task-wrapper{
+	width: 95%;
+	height: 85px;
+	background-color: rgba(0, 255, 46, 0.26);
+	padding: 10px 5px;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-top: 10px;
+  margin-bottom: 10px;
+}
+.task-picture-wrapper{
+  height: 100%;
+  position: relative;
+}
+.task-picture{
+	border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.price-wrapper{
+  height: 60px;
+  display: table;
+}
+.price{
+	font-weight: 600;
+  display: table-cell;
+  vertical-align: middle;
+  height: 100%;
+	font-size: 2.3em;
+}
+.description-wrapper{
+	float: right;
+  margin-left: 5%;
+  height: 100%;
+  overflow: hidden;
+}
