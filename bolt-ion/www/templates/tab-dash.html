@@ -6,12 +6,18 @@
   <h2>In progress</h2>
 
     <ul class="list tasks-in-progress">
-      <li ng-repeat="item in inProgressList" ng-click="goToTaskDetail({{item}})"  class="item">{{item.title}}<i class="ion-chevron-right"></i></li>
+      <li ng-repeat="item in taskList | filter:inProgressFilter" 
+          ng-click="goToTaskDetail(item)" class="item">
+          {{item.get('title')}}
+          <i class="ion-chevron-right"></i>
+      </li>
     </ul>
 
     <h2>Completed</h2>
-    <ul class="list tasks-completed">
-      <li ng-repeat="item in completedList" ng-click="goToTaskDetail({{item}})" class="item">{{item.title}}<i class="ion-chevron-right"></i></li>
+    <ul class="list tasks-in-progress">
+      <li ng-repeat="item in taskList | filter:completedFilter" ng-click="goToTaskDetail({{item}})"  class="item">
+      {{item.get('title')}}
+      <i class="ion-chevron-right"></i></li>
     </ul>
   </ion-content>
 </ion-view>

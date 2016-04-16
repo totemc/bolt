@@ -1,11 +1,14 @@
 <ion-view view-title="Profile">
-<ion-nav-buttons side="primary">
-    <button class="button">Edit</button>
+<ion-nav-buttons side="left">
+  <a class="button button-icon">Edit</a>
+</ion-nav-buttons>
+<ion-nav-buttons side="right">
+  <a class="button button-icon">Account</a>
 </ion-nav-buttons>
    <ion-content class="padding">
       <ion-item class="profile-top">
         <div class="profile-photo-wrapper">
-          <img class="profile-photo" ng-src="../img/profile-photo1.jpg">
+          <img class="profile-photo" ng-src="../img/{{currentUser.image}}">
         </div>
         <p>Martin</p> 
       </ion-item> 
