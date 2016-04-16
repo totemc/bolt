@@ -1,0 +1,73 @@
+{
+  "senderAccountNumber": "495703042020470",
+  "recipientPrimaryAccountNumber":"4957030420210454",
+  "cardAcceptor":{
+    "name":"Acceptor 2",
+    "address":{
+      "country":"CAN",
+      "state":"AB"
+    }
+  },
+  "amount":"200",
+  "transactionCurrencyCode":"CAD",
+  "pinData":{
+    "securityRelatedControlInfo":{
+      "pinBlockFormatCode":"1",
+      "zoneKeyIndex":"1",
+      "pinDataBlock":"1cd948f2b961b682"
+    }
+  },
+  "pointOfServiceData":{
+    "panEntryMode":"90",
+    "posConditionCode":"0",
+    "motoECIIndicator":"0"
+  },
+  "cardAcceptor":{
+    "terminalId":"365539",
+    "IdCode":"VMT200911026070"
+  },
+  "acquirerCountryCode":"840",
+  "localTransactionDateTime":"2016-04-16T15:51:57",
+  "magneticStripeData":{
+    "track2Data":"4008310000000007D130310191014085",
+    "track1Data":"1010101010101010101010101010"
+  },
+  "pointOfServiceCapability":{
+    "posTerminalType":"4",
+    "posTerminalEntryCapability":"2",
+    "systemsTraceAuditNumber":"451000",
+    "feeProgramIndicator":"123",
+    "retrievalReferenceNumber":"330000550000",
+    "transactionIdentifier":"381228649430011"
+  },
+  "Cavv":"0000010926000071934977253000000000000000",
+  "businessApplicationId":"AA",
+  "merchantCategoryCode":"6012"
+}
+
+var data = JSON.stringify({
+    "systemsTraceAuditNumber" : "451001",
+    "retrievalReferenceNumber" : "330000550000",
+    "localTransactionDateTime" : "2016-04-16T14:39:47",
+    "acquiringBin" : "408999",
+    "acquirerCountryCode" : "840",
+    "senderPrimaryAccountNumber" : "4895142232120006",
+    "senderCardExpiryDate" : "2015-10",
+    "senderCurrencyCode" : "USD",
+    "amount" : "124.02",
+    "businessApplicationId" : "AA",
+    "surcharge" : "11.99",
+    "foreignExchangeFeeTransaction" : "11.99",
+    "cavv" : "0700100038238906000013405823891061668252",
+    "cardAcceptor" : {
+        "name" : "Visa Inc. USA-Foster City",
+        "terminalId" : "ABCD1234",
+        "idCode" : "ABCD1234ABCD123",
+        "address" : {
+            "state" : "CA",
+            "county" : "San Mateo",
+            "country" : "USA",
+            "zipCode" : "94404"
+        }
+    }
+});
