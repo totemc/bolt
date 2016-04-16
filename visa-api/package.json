@@ -1,0 +1,6 @@
+{
+  "name": "vdp-node-sample",
+  "dependencies": {
+    "request": "^2.69.0"
+  }
+}
