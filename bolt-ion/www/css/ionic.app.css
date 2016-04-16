@@ -19,7 +19,7 @@ $dark:                            #444 !default;
   position: absolute;
   right: 3%; }
 
-<<<<<<< HEAD
+
 .title {
   text-align: center; }
 
@@ -7090,7 +7090,7 @@ th.hide-for-touch {
   th.show-for-print {
     display: table-cell !important; } }
 
-=======
+
 .profile-photo-wrapper {
   position: relative;
   text-align: center; }
@@ -7105,7 +7105,6 @@ th.hide-for-touch {
 .profile-top {
   text-align: center; }
 
->>>>>>> e78f7e8a0e23c5e8dfbaca7a9321dca2b7fc69f5
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
