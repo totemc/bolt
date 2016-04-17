@@ -19,6 +19,16 @@ $dark:                            #444 !default;
   position: absolute;
   right: 3%; }
 
+.home-heading {
+  padding-left: 15px !important; }
+  .home-heading h2 {
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 30px !important; }
+
+.search-wrapper {
+  margin-top: 0 !important; }
+
 .task-list input.ng-pristine.ng-valid.ng-touched {
   padding: 10px !important; }
 
@@ -37,6 +47,38 @@ $dark:                            #444 !default;
   .button-login-wrapper button {
     display: block;
     margin: 0 auto; }
+
+#login-wrapper {
+  display: table;
+  height: 100%;
+  width: 100%;
+  top: 0; }
+  #login-wrapper .scroll {
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+    text-align: center; }
+
+.logo-wrapper {
+  text-align: center;
+  height: 170px; }
+
+.logo-title {
+  font-size: 6em;
+  display: table-cell;
+  vertical-align: middle;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%; }
+
+.logo-title-wrapper {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  border: 3px solid black;
+  display: table;
+  margin: 0 auto; }
 
 .title {
   text-align: center; }

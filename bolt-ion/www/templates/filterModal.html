@@ -1,0 +1,26 @@
+<ion-modal-view>    
+    <ion-header-bar>
+        <div class="buttons">
+            <button class="button button-clear" type="button" ng-click="close()">Done</button>
+        </div>
+        <h1 class="title">Filter by</h1>
+    </ion-header-bar>
+    <ion-content>
+    	<div class="item item-divider">Distance (in miles)</div>	
+    	<div class="item range">
+	    	  <i class="icon ion-ios-location-outline"></i>
+	    	  <input type="range" ng-model="filter.distance" min="0" max="100" step="2">
+	    	  <i class="icon ion-ios-location"></i>
+    	</div>
+    	<div class="item item-divider">Category</div>	
+    	<div class="item range">
+	    	  <select ng-model="filter.category">
+                 <option>All</option>
+	    	     <option>Pickup / Dropoff</option>
+	    	     <option>Chores</option>
+	    	     <option>Pets</option>
+	    	     <option>Technical</option>
+	    	  </select>
+    	</div>
+    </ion-content>
+</ion-modal-view>

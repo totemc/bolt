@@ -84,6 +84,19 @@ angular.module('starter.controllers', [])
   // obj is the new task to be saved to db
   var obj = new Parse.Object('boltTask');
 
+  $scope.query = {
+    text: ''
+  }; 
+
+  $scope.searchFilter = function(item){
+      if(item.get('title').toLowerCase().indexOf($scope.query.text.toLowerCase()) > -1){
+        return true;
+      }
+      else{
+        return false;
+      }
+  }
+
   // Render task list
   $scope.$on('$ionicView.beforeEnter', function () {
       console.log("before enter");
@@ -97,6 +110,7 @@ angular.module('starter.controllers', [])
 
   $scope.redraw = function(){
     $scope.taskList = [];
+  
     var query = new Parse.Query('boltTask');
     query.equalTo("user", Parse.User.current().get('username'));
     query.find({
@@ -108,6 +122,7 @@ angular.module('starter.controllers', [])
           $scope.taskList.push(obj);
         }
         console.log($scope.taskList);
+        $scope.$apply();
       },
       error: function(error) {
       console.log("Error: " + error.code + " " + error.message);
@@ -213,6 +228,8 @@ angular.module('starter.controllers', [])
 
 .controller('tasks-detail-view-Ctrl', function($scope, $location, $state, $stateParams) {
 
+  $scope.currentUser = Parse.User.current();
+
   $scope.$on('$ionicView.beforeEnter', function () {
       var query = new Parse.Query('boltTask');
       query.equalTo("_id", $stateParams.id);
@@ -240,9 +257,12 @@ angular.module('starter.controllers', [])
         }
       });          
   })
+
+  $scope.loadBoltProfile = function(username){
+    $location.path('/tab/account-nonself/'+username);
+  }
          
 })
-
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -334,49 +354,154 @@ angular.module('starter.controllers', [])
 
   }
 
-
-
 })
 
 // Get the Tasks
-.controller('EmployeeCtrl', function($scope, $stateParams){
+.controller('EmployeeCtrl', function($scope, $stateParams, $ionicModal){
   var allTasks = [];
-  var query = new Parse.Query('boltTask');
-  query.find({
-    success: function(results) {
-      console.log("Successfully retrieved " + results.length);
 
-      // Do something with the returned Parse.Object values
-      for (var i = 0; i < results.length; i++) {
-        var obj = results[i];
-        allTasks.push(results[i]);
-        console.log();
 
-      }
-      console.log(allTasks);
-      $scope.taskz = allTasks;
-      
-    },
-    error: function(error) {
-    console.log("Error: " + error.code + " " + error.message);
-    }
+  // Render modal
+  $ionicModal.fromTemplateUrl('templates/filterModal.html', {
+      focusFirstInput: true,
+      scope: $scope
+  }).then(function(modal) {
+      $scope.modal = modal;
   });
-  
-  console.log("priting");
+
+  $scope.$on('$ionicView.beforeEnter', function () {
+      $scope.redraw();   
+  })
+
+  $scope.filterCategory = function(task){
+
+      if($scope.filter.category == 'All'){
+        return true;
+      }
+      else if(task.attributes.category == $scope.filter.category){
+        return true;
+      } else {
+        return false;
+      }      
+  }
+
+
+  var current_location = new Parse.GeoPoint({
+    latitude: 25.777680,
+    longitude: -80.190128
+  });
+
+  var query = new Parse.Query('boltTask');
+
+  $scope.filter = {distance: 20, category: 'All'};
+
+  query.withinMiles('point', current_location, $scope.filter.distance);
+
+  $scope.redraw = function(){
+    $scope.taskz = [];
+    allTasks = [];
+    query.find({
+      success: function(results) {
+        console.log("Successfully retrieved " + results.length);
+
+        // Do something with the returned Parse.Object values
+        for (var i = 0; i < results.length; i++) {
+          var obj = results[i];
+          allTasks.push(results[i]);
+          console.log();
+
+        }
+        console.log(allTasks);
+        $scope.taskz = allTasks;
+        $scope.$apply();
+      },
+      error: function(error) {
+      console.log("Error: " + error.code + " " + error.message);
+      }
+    });
+  };
+
+
+  $scope.openFilter = function(){
+      $scope.modal.show();
+  }
+
+  $scope.close = function (){
+    $scope.modal.hide();
+    console.log($scope.filter);
+    $scope.redraw();
+  }
+
+})
+
+.controller('profile-nonselfCtrl', function($scope, $stateParams, $state, $ionicModal){
+  console.log($state);
+  console.log("s");
+  // var query = new Parse.Query(Parse.User);
+  // query.equalTo('username', $stateParams.username);
+  // query.first({
+  //   success: function(res){
+  //     console.log(res);
+  //     $scope.userProfile = res;
+  //     $scope.$apply();
+  //   }
+  // });
+
+  // $scope.message = {
+  //   from: Parse.User.current().get('username'),
+  //   text: '',
+  //   subject: ''
+  // }
+
+  // $scope.logout = function(){
+  //   Parse.User.logOut().then(
+  //    function() {
+  //        $state.go('login');     
+  //      }, function(error) {
+  //      }
+  //   );
+  // }
+
+  // // Render modal
+  // $ionicModal.fromTemplateUrl('templates/messageModal.html', {
+  //     focusFirstInput: true,
+  //     scope: $scope
+  // }).then(function(modal) {
+  //     $scope.modal = modal;
+  // });
+
+  // $scope.openMessageModal = function(){
+  //     $scope.modal.show();
+  // }
+
+  // $scope.close = function (){
+  //   $scope.modal.hide();
+  // }
+
+  // $scope.send = function (){
+  //   console.log($scope.message);
+  //   $scope.modal.hide();
+  // }
 
 })
 
 .controller('profileCtrl', function($scope, $stateParams, $state, $ionicModal){
 
+  console.log("user");
   $scope.currentUser = Parse.User.current();
   $scope.message = {
-    from: '',
+    from: $scope.currentUser.get('username'),
     text: '',
     subject: ''
   }
 
-  $scope.exit = function(){
-     $state.go('login');     
+  $scope.logout = function(){
+    Parse.User.logOut().then(
+     function() {
+         $state.go('login');     
+       }, function(error) {
+       }
+    );
   }
 
   // Render modal
@@ -401,9 +526,6 @@ angular.module('starter.controllers', [])
   }
 
 })
-
-
-
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
