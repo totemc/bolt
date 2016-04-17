@@ -3,7 +3,9 @@
 
 ##Technologies
 Ionic
+
 MongoDB
+
 Parse Server
 
 ##Open Source Parse Instance
