@@ -1,0 +1,45 @@
+<ion-modal-view>    
+    <ion-header-bar>
+        <div class="buttons">
+            <button class="button button-clear" type="button" ng-click="close2()">Close</button>
+        </div>
+        <h1 class="title">Add task</h1>
+    </ion-header-bar>
+    <ion-content class="padding">
+       <div class="card">
+           <div class="row">
+               <div class="small-12 columns">
+                   <h1>Thanks.</h1>
+                   <h3>Rate your boi</h3>
+                   <div style="padding:2em 0" class="row text-center">
+                        <div style="width:20%" class="star-col">
+                            <i id="star1" style="font-size:3em" class="ion-ios-star-outline" ng-click="clearIt(); star1()"></i>
+                        </div>
+                        <div style="width:20%" class="star-col" ng-click="clearIt(); star2()">
+                            <i id="star2" style="font-size:3em" class="ion-ios-star-outline"></i>
+                        </div>
+                        <div style="width:20%" class="star-col" ng-click="clearIt(); star3()">
+                            <i id="star3" style="font-size:3em" class="ion-ios-star-outline"></i>
+                        </div>
+                        <div style="width:20%" class="star-col" ng-click="clearIt(); star4()">
+                            <i id="star4" style="font-size:3em" class="ion-ios-star-outline"></i>
+                        </div>
+                        <div style="width:20%" class="star-col" ng-click="clearIt(); star5()">
+                            <i id="star5" style="font-size:3em" class="ion-ios-star-outline"></i>
+                        </div>
+                   </div>
+                   <div class="small-12 columns">
+                       <button class="button button-block button-balanced" ng-click="finish(); close2()">
+                           <i class="ion-checkmark"></i>
+                       </button>
+                   </div
+>                   <div class="small-12 columns">
+                       <button class="button button-block button-stable" ng-click="finish(); close2()">
+                           no thanks.
+                       </button>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </ion-content>
+</ion-modal-view>
