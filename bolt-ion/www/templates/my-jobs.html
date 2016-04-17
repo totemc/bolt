@@ -1,0 +1,48 @@
+<ion-view view-title="Tasks">
+  <ion-content class="content-start">
+  	<div class="bolt-row">
+  	<a href="#/tab/home">
+  		<div class="small-12 small-centered search-jobs-wrapper columns">
+  			<div class="emerald-flat-button search-jobs">Search Jobs</div>
+  		</div>
+  	</a>
+  		
+
+  	</div>
+  	<div class="list card">
+
+  	  <a href="#" class="item text-center job-in-progress">
+	  	  <div class="bolt-row">
+	  	  	<span class="text-center">
+	  	    
+	  	    Jobs in Progress
+	  	    </span>
+	  	  </div>
+  	  </a>
+
+  	  <a ng-href="/#/tab/my-jobs/{{task.id}}" class="item text-center" ng-repeat="task in progressTasks">
+  	  <img class="job-pic" ng-src="{{task.attributes.image}}"/>
+  	    {{task.attributes.title}}
+  	  </a>
+
+
+  	</div>
+  	  	<div class="list card">
+
+  	  	  <a class="item text-center completed-jobs">
+  		  	  <div class="bolt-row">
+  		  	  	<span class="text-center">
+  		  	    	Completed Jobs
+  		  	    </span>
+  		  	  </div>
+  	  	  </a>
+
+  	  	  <a ng-href="/#/tab/my-jobs/{{task.id}}" class="item text-center" ng-repeat="task in completedTasks">
+  	  	  <img class="job-pic" ng-src="{{task.attributes.image}}"/>
+  	  	    {{task.attributes.title}}
+  	  	  </a>
+
+
+  	  	</div>
+  </ion-content>
+</ion-view>
