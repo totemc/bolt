@@ -19,6 +19,25 @@ $dark:                            #444 !default;
   position: absolute;
   right: 3%; }
 
+.task-list input.ng-pristine.ng-valid.ng-touched {
+  padding: 10px !important; }
+
+#inputLabel {
+  background: transparent !important;
+  border: none !important;
+  padding: 10px !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid #cccccc !important; }
+
+.item-stacked-label {
+  padding: 20px 10px !important; }
+
+.button-login-wrapper {
+  text-align: center; }
+  .button-login-wrapper button {
+    display: block;
+    margin: 0 auto; }
+
 .title {
   text-align: center; }
 

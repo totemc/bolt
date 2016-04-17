@@ -11,17 +11,18 @@
 
     	  <div class="item item-avatar">
     	    <img src="img/{{currentUser.image}}">
-    	    <h2>{{currentItem.user_id}}</h2>
+    	    <h2>{{item.user_id}}</h2>
     	    <p>April 16, 2016</p>
     	  </div>
 
     	  <div class="item item-body">
-    	    <img class="full-image" src="../img/{{currentItem.image}}">
-    	    <h2>{{currentItem.title}}</h2>
+    	    <img class="full-image" src="{{currentItem.image}}">
+    	    <h2>{{item.title}}</h2>
     	    <p>
-    	      {{currentItem.desc}}
+    	      {{item.desc}}
     	    </p>
     	    <p>
+              <p ng-if="{{item.accepted_by}}">Accepted by: {{item.accepted_by}}</p>
     	      <a href="#" class="subdued">1 Comment</a>
     	      <a href="#" class="subdued">5 Interested</a>
     	    </p>

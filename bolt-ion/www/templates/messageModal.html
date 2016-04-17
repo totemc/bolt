@@ -1,0 +1,23 @@
+<ion-modal-view>    
+    <ion-header-bar>
+        <div class="buttons">
+            <button class="button button-clear" type="button" ng-click="close()">Close</button>
+        </div>
+        <h1 class="title">Add task</h1>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="list">
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Subject</span>
+            <input ng-model="message.subject" id="inputLabel" type="text" placeholder="Task subject">
+            </label>
+            <label class="item item-input item-stacked-label">
+            <span class="input-label">Message</span>
+            <input ng-model="message.text" id="inputLabel" type="text" placeholder="Send message">
+          </label>
+          <button class="button button-block button-positive" ng-click="send()">
+            Send Message
+          </button>
+        </div> 
+    </ion-content>
+</ion-modal-view>
