@@ -1,12 +1,30 @@
 <ion-view view-title="Tasks">
+<ion-nav-buttons side="right">
+    <a class="button button-icon icon ion-funnel" ng-click="openFilter()"></a>
+</ion-nav-buttons>
   <ion-content class="padding">
-  <div class="list card">
-    <div class="item item-avatar home-heading bar bar-energized">
-      <h2>In Progress</h2>
+  <div class="list card ">
+    <div class="item-accordion item item-avatar home-heading bar bar-calm">
+      <h2 ng-click="toggleShow(0)">Open<i class="dropdown-icon ion-arrow-down-b"></i></h2>
     </div>
     <div class="item item-body">
-    <ul class="list">
-      <li class="item" ng-repeat="task in progressTasks" ng-click="goToTaskDetail(task.id)"> 
+      <ul class="list tasks-in-progress" ng-show="shown0">
+        <li class="item" ng-repeat="task in allTasks | filter:filterCategory"
+            ng-click="goToTaskDetail('open',task.id)" class="item">
+            {{task.get('title')}}
+            <img class="job-pic" ng-src="{{task.attributes.image}}"/>
+            <i class="ion-chevron-right"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="list card">
+    <div class="item item-avatar home-heading bar bar-energized">
+      <h2 ng-click="toggleShow(1)">In Progress<i class="dropdown-icon ion-arrow-down-b"></i></h2>
+    </div>
+    <div class="item item-body">
+    <ul class="list" ng-show="shown1">
+      <li class="item" ng-repeat="task in progressTasks | filter:filterCategory" ng-click="goToTaskDetail('pending',task.id)"> 
           {{task.get('title')}}
           <img class="job-pic" ng-src="{{task.attributes.image}}"/>
           <i class="ion-chevron-right"></i>
@@ -15,13 +33,13 @@
     </div>
   </div>
 
-  <div class="list card">
-    <div class="item item-avatar home-heading bar bar-balanced">
-      <h2>Completed</h2>
+  <div class="list card ">
+    <div class="item-accordion item item-avatar home-heading bar bar-balanced">
+      <h2 ng-click="toggleShow(2)">Completed<i class="dropdown-icon ion-arrow-down-b"></i></h2>
     </div>
     <div class="item item-body">
-      <ul class="list tasks-in-progress">
-        <li class="item" ng-repeat="task in completedTasks"
+      <ul class="list tasks-in-progress" ng-show="shown2">
+        <li class="item" ng-repeat="task in completedTasks | filter:filterCategory"
             ng-click="goToTaskDetail(task.id)" class="item">
             {{task.get('title')}}
             <img class="job-pic" ng-src="{{task.attributes.image}}"/>
@@ -30,6 +48,6 @@
       </ul>
     </div>
   </div>
-  <a href="/#/tab/home" class="button button-full button-dark">View More Jobs</a>
+  <a href="#/tab/home" class="button button-full button-dark">View More Jobs</a>
   </ion-content>
 </ion-view>
