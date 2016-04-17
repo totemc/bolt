@@ -242,6 +242,7 @@ angular.module('starter.controllers', [])
   var holdme = $scope.showTask;
   $scope.singleTask =[];
   $scope.showme;
+  $scope.saveme;
   console.log(holdme);
   var query = new Parse.Query('boltTask');
   query.get(holdme, {
@@ -253,8 +254,13 @@ angular.module('starter.controllers', [])
         "title": object.get("title"),
         "amount": object.get("amount"),
         "employer": object.get("employer_rating"),
-        "user": object.get("user")
+        "user": object.get("user"),
+        "image": object.get("image"),
+        "bargain_amount": object.get("bargain_amount"),
+        "accepted_by": object.get("accepted_by"),
+        "status": object.get("status")
       }]
+      $scope.saveme = $scope.showme;
       console.log(object.get("title"));
       console.log($scope.showme);
     },
@@ -264,8 +270,42 @@ angular.module('starter.controllers', [])
       console.log("nahman");
     }
   });
+  $scope.add = function(){
+    console.log("here it is");
+    console.log($scope.showme);
 
+    $scope.showme[0].amount = parseInt($scope.showme[0].amount)+1;
+  }
+  $scope.subtract = function(){
+    $scope.showme[0].amount = parseInt($scope.showme[0].amount)-1;
+  }
+  $scope.accept = function(){
+    var Task = Parse.Object.extend("boltTask");
+    var query = new Parse.Query(Task);
+    query.get(holdme, {
+      success: function(task) {
+        console.log("reat");
+        var ass = $scope.showme[0].amount;
+        ass = ass+'';
+        console.log(ass);
+        if($scope.showme[0].bargain_amount == "0"){
+          task.set("status", "inProgress");
+        }
+        task.set("accepted_by", Parse.User.current().get('username'));
+        task.set("bargain_amount", ass);
+        task.save(null, {
+          success: function(data) {
+              console.log(data);
+          }
+        });
+      },
+      error: function(object, error) {
+        // The object was not retrieved successfully.
+        // error is a Parse.Error with an error code and message.
+      }
+    });
 
+  }
 
 
 
@@ -310,6 +350,7 @@ angular.module('starter.controllers', [])
   }
 
 })
+
 
 
 
