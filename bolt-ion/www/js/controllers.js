@@ -3,12 +3,34 @@ angular.module('starter.controllers', [])
 .controller('LoginCtrl', function($scope, $stateParams, $state) {
 
   // create Parse dummy user
-  var user = new Parse.User();
-  user.set("username", "martin");
-  user.set("password", "password");
-  user.set("rating", 3);
-  user.set("bio", "I'm a full-stack web developer at Florida International University, studying computer science. I enjoy running, playing soccer, and building webapps. Feel free to contact me in case you have any questions about my Bolt tasks!");
+  // var user = new Parse.User();
+  // var user3 = new Parse.User();
 
+  // user.set("username", "martin");
+  // user.set("password", "password");
+  // user.set("rating", 3);
+  // user.set("balance", 100);
+  // user.set("bio", "I'm a full-stack web developer at Florida International University, studying computer science. I enjoy running, playing soccer, and building webapps. Feel free to contact me in case you have any questions about my Bolt tasks!");
+  // user.set("image", "martin.jpg");
+  // user.set("type", "employer");
+  // // create Parse dummy user
+  // user2.set("username", "jaime");
+  // user2.set("password", "password");
+  // user2.set("rating", 3);
+  // user2.set("balance", 200);
+  // user2.set("bio", "I'm a full-stack web developer at Florida International University, studying computer science. I enjoy running, playing soccer, and building webapps. Feel free to contact me in case you have any questions about my Bolt tasks!");
+  // user2.set("image", "jaime.jpg");
+  // user2.set("type", "employee");
+
+  // user3.set("username", "adrian");
+  // user3.set("password", "password");
+  // user3.set("rating", 3);
+  // user3.set("balance", 100);
+  // user3.set("bio", "I'm a full-stack web developer at Florida International University, studying computer science. I enjoy running, playing soccer, and building webapps. Feel free to contact me in case you have any questions about my Bolt tasks!");
+  // user3.set("image", "adrian.jpg");
+  // user3.set("type", "employer");
+
+  // user.set("bio", "I'm a full-stack web developer");
   // user.signUp(null, {
   //   success: function(user) {
   //     // Hooray! Let them use the app now.
@@ -16,6 +38,18 @@ angular.module('starter.controllers', [])
   //     console.log("Sign up successful")
   //   },
   //   error: function(user, error) {
+  //     // Show the error message somewhere and let the user try again.
+  //     console.log("Error: " + error.code + " " + error.message);
+  //   }
+  // });
+  // user3.set("bio", "I'm a full-stack web developer");
+  // user3.signUp(null, {
+  //   success: function(user3) {
+  //     // Hooray! Let them use the app now.
+  //     console.log(user3);
+  //     console.log("Sign up successful")
+  //   },
+  //   error: function(user3, error) {
   //     // Show the error message somewhere and let the user try again.
   //     console.log("Error: " + error.code + " " + error.message);
   //   }
@@ -30,9 +64,11 @@ angular.module('starter.controllers', [])
     Parse.User.logIn($scope.loginData.username, $scope.loginData.password, {
       success: function(user) {
         // Do stuff after successful login.
-        console.log(user);
-        console.log("success");
-        $state.go('tab.dash');
+        if(user.get('type') == 'employee'){
+            $state.go('tab.employee-home');
+        } else {
+            $state.go('tab.dash')
+        }
       },
       error: function(user, error) {
         // The login failed. Check error to see why.
@@ -45,65 +81,66 @@ angular.module('starter.controllers', [])
 
 .controller('tasks-homeCtrl', function($scope, $location, $state, $ionicModal) {
 
+  // obj is the new task to be saved to db
   var obj = new Parse.Object('boltTask');
-  
-  obj.set('user_id',0);
-  obj.set('amount', "50$");
-  obj.set('employer-rating', "4.2");
-  obj.set('category', "Pickup");
-  obj.set('image',"https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_March_2010-1.jpg");
-  obj.set('title', "Pick up dry cleaners");
-  obj.set('status', "inProgress");
-  obj.set('desc',"Pick up my suit");
 
-  obj.save().then(function(obj) {}, function(err) { console.log(err); });  
+  // Render task list
+  $scope.$on('$ionicView.beforeEnter', function () {
+      console.log("before enter");
+      $scope.redraw();   
+  })
 
-  var query = new Parse.Query('boltTask');
-  query.find({
-    success: function(results) {
-      console.log("Successfully retrieved " + results.length);
+  // $scope.$on('$ionicView.enter', function (){
+  //     console.log("enter");
+  //     $scope.redraw();
+  // })
 
-      // Do something with the returned Parse.Object values
-      for (var i = 0; i < results.length; i++) {
-        var obj = results[i];
-        console.log(obj);
+  $scope.redraw = function(){
+    $scope.taskList = [];
+    var query = new Parse.Query('boltTask');
+    query.equalTo("user", Parse.User.current().get('username'));
+    query.find({
+      success: function(results) {
+        console.log("Successfully retrieved " + results.length + " tasks");
+        // Do something with the returned Parse.Object values
+        for (var i = 0; i < results.length; i++) {
+          var obj = results[i];
+          $scope.taskList.push(obj);
+        }
+        console.log($scope.taskList);
+      },
+      error: function(error) {
+      console.log("Error: " + error.code + " " + error.message);
       }
-    },
-    error: function(error) {
-    console.log("Error: " + error.code + " " + error.message);
-    }
-  });
+    }); 
+  }
 
-
-  $scope.inProgressList = [
-    {
-      title: "Pick up dry cleaners",
-      status: "inProgress",
-      desc: "Get my suit",
-      id: 0
+  $scope.submittedFilter = function(item){
+    if(item.get('status') == 'submitted'){
+      return true;
+    } 
+    else {
+      return false;
     }
-  ];
+  }
 
-  $scope.completedList = [
-    {
-      title: "Pick up dry cleaners",
-      status: "complete",
-      desc: "",
-      id: 0
-    },
-    {
-      title: "Groceries",
-      status: "complete",
-      desc: "",
-      id: 1
-    },
-    {
-      title: "Deposit Check",
-      status: "complete",
-      desc: "",
-      id: 2
+  $scope.inProgressFilter = function(item){
+    if(item.get('status') == 'inProgress'){
+      return true;
+    } 
+    else {
+      return false;
     }
-  ];
+  }
+
+  $scope.completedFilter = function(item){
+    if(item.get('status') == 'completed'){
+      return true;
+    } 
+    else {
+      return false;
+    }
+  }
 
   // Render modal
   $ionicModal.fromTemplateUrl('templates/addTaskModal.html', {
@@ -114,36 +151,96 @@ angular.module('starter.controllers', [])
   });
 
   $scope.goToTaskDetail = function (item){
-    console.log(item);
     $location.path('/tab/task-detail-view/'+item.id);
   }
 
-  $scope.addNewTask = function(){
-    $scope.modal.show();
-    $scope.newTask = [
-      {
-        title: "",
-        status: "",
-        desc: "",
-        id: 0
-      }
-    ];
-  }
-
-  $scope.closeNewTask = function(){
+  $scope.closeNewTask = function (){
     $scope.modal.hide();
   }
 
-  $scope.saveNewTask = function(item){
+  $scope.addNewTask = function(){
+
+    // create empty new task
+    $scope.newTask = {
+      user_id: Parse.User.current().get('username'),
+      amount: '',
+      employer_rating: '',
+      category: '',
+      image: '',
+      title: '',
+      status: 'submitted',
+      desc: '',
+      zip: '',
+      location: '',
+      bargain_amount: '0',
+      accepted_by: ''
+    };
+
+    $scope.modal.show();
+
+  }
+
+  $scope.saveNewTask = function(){
+
+    console.log("About to save newtask:");
+
     console.log($scope.newTask);
+
+    obj.set('user', $scope.newTask.user_id);
+    obj.set('amount', $scope.newTask.amount);
+    obj.set('employer_rating', $scope.newTask.employer_rating);
+    obj.set('category', $scope.newTask.category);
+    obj.set('image',$scope.newTask.image);
+    obj.set('title', $scope.newTask.title);
+    obj.set('status', $scope.newTask.status);
+    obj.set('desc', $scope.newTask.desc);
+    obj.set('zip', $scope.newTask.zip);
+    obj.set('location', $scope.newTask.location);
+    obj.set('bargain_amount', $scope.newTask.bargain_amount);
+    obj.set('accepted_by', $scope.newTask.accepted_by);
+
+    obj.save().then(function(obj) {
+      console.log("New task saved successfully.");
+      console.log(obj);
+    }, function(err) {
+      console.log(err); 
+    }); 
+    $scope.modal.hide();
+    $scope.redraw();
   }
 
 })
 
 .controller('tasks-detail-view-Ctrl', function($scope, $location, $state, $stateParams) {
 
-  $scope.currentItemId = $stateParams.id;
-  
+  $scope.$on('$ionicView.beforeEnter', function () {
+      var query = new Parse.Query('boltTask');
+      query.equalTo("_id", $stateParams.id);
+      query.find({
+        success: function(results) {
+          console.log("Successfully retrieved " + results.length + " tasks");
+          // Do something with the returned Parse.Object values
+          for (var i = 0; i < results.length; i++) {
+            var obj = results[i];
+            $scope.item = {
+                user_id: Parse.User.current().get('username'),
+                amount: obj.get('amount'),
+                employer_rating: obj.get('employer_rating'),
+                category: obj.get('category'),
+                image: obj.get('image'),
+                title: obj.get('title'),
+                status: obj.get('status'),
+                desc: obj.get('desc'),
+                accepted_by: obj.get('accepted_by')
+              };
+          }
+        },
+        error: function(error) {
+        console.log("Error: " + error.code + " " + error.message);
+        }
+      });          
+  })
+         
 })
 
 
@@ -166,6 +263,82 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
+// Controller for task-onclick  
+.controller('taskOnClick', function($scope, $location, $state, $stateParams) {
+  $scope.showTask = $stateParams.id;
+  var holdme = $scope.showTask;
+  $scope.singleTask =[];
+  $scope.showme;
+  $scope.saveme;
+  console.log(holdme);
+  var query = new Parse.Query('boltTask');
+  query.get(holdme, {
+    success: function(object) {
+      console.log("eyo")
+      $scope.singleTask.push(object);
+      $scope.showme = [{
+        "desc": object.get("desc"),
+        "title": object.get("title"),
+        "amount": object.get("amount"),
+        "employer": object.get("employer_rating"),
+        "user": object.get("user"),
+        "image": object.get("image"),
+        "bargain_amount": object.get("bargain_amount"),
+        "accepted_by": object.get("accepted_by"),
+        "status": object.get("status")
+      }]
+      $scope.saveme = $scope.showme;
+      console.log(object.get("title"));
+      console.log($scope.showme);
+    },
+
+    error: function(object, error) {
+      // error is an instance of Parse.Error.
+      console.log("nahman");
+    }
+  });
+  $scope.add = function(){
+    console.log("here it is");
+    console.log($scope.showme);
+
+    $scope.showme[0].amount = parseInt($scope.showme[0].amount)+1;
+  }
+  $scope.subtract = function(){
+    $scope.showme[0].amount = parseInt($scope.showme[0].amount)-1;
+  }
+  $scope.accept = function(){
+    var Task = Parse.Object.extend("boltTask");
+    var query = new Parse.Query(Task);
+    query.get(holdme, {
+      success: function(task) {
+        console.log("reat");
+        var ass = $scope.showme[0].amount;
+        ass = ass+'';
+        console.log(ass);
+        if($scope.showme[0].bargain_amount == "0"){
+          task.set("status", "inProgress");
+        }
+        task.set("accepted_by", Parse.User.current().get('username'));
+        task.set("bargain_amount", ass);
+        task.save(null, {
+          success: function(data) {
+              console.log(data);
+          }
+        });
+      },
+      error: function(object, error) {
+        // The object was not retrieved successfully.
+        // error is a Parse.Error with an error code and message.
+      }
+    });
+
+  }
+
+
+
+})
+
+// Get the Tasks
 .controller('EmployeeCtrl', function($scope, $stateParams){
   var allTasks = [];
   var query = new Parse.Query('boltTask');
@@ -193,17 +366,42 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('profileCtrl', function($scope, $stateParams){
+.controller('profileCtrl', function($scope, $stateParams, $state, $ionicModal){
 
   $scope.currentUser = Parse.User.current();
-  
-  if ($scope.currentUser) {
-      console.log('current user');
-  } else {
-      console.log("Not current user");
+  $scope.message = {
+    from: '',
+    text: '',
+    subject: ''
+  }
+
+  $scope.exit = function(){
+     $state.go('login');     
+  }
+
+  // Render modal
+  $ionicModal.fromTemplateUrl('templates/messageModal.html', {
+      focusFirstInput: true,
+      scope: $scope
+  }).then(function(modal) {
+      $scope.modal = modal;
+  });
+
+  $scope.openMessageModal = function(){
+      $scope.modal.show();
+  }
+
+  $scope.close = function (){
+    $scope.modal.hide();
+  }
+
+  $scope.send = function (){
+    console.log($scope.message);
+    $scope.modal.hide();
   }
 
 })
+
 
 
 

@@ -1,5 +1,33 @@
 <ion-view view-title="Task Details">
+	<ion-nav-bar class="bar-stable">
+		<ion-nav-back-button>
+		  </ion-nav-back-button>
+	  <ion-nav-buttons side="right">
+	    <a class="button button-icon">Edit</a>
+	  </ion-nav-buttons>
+	</ion-nav-bar>
   <ion-content class="padding">
-    <h2>Task: {{currentItemId}}</h2>
+    	<div class="list card">
+
+    	  <div class="item item-avatar">
+    	    <img src="img/{{currentUser.image}}">
+    	    <h2>{{item.user_id}}</h2>
+    	    <p>April 16, 2016</p>
+    	  </div>
+
+    	  <div class="item item-body">
+    	    <img class="full-image" src="{{currentItem.image}}">
+    	    <h2>{{item.title}}</h2>
+    	    <p>
+    	      {{item.desc}}
+    	    </p>
+    	    <p>
+              <p ng-if="{{item.accepted_by}}">Accepted by: {{item.accepted_by}}</p>
+    	      <a href="#" class="subdued">1 Comment</a>
+    	      <a href="#" class="subdued">5 Interested</a>
+    	    </p>
+    	  </div>
+
+    	</div>
   </ion-content>
 </ion-view>

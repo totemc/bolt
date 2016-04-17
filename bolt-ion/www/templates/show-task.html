@@ -1,0 +1,56 @@
+<ion-view view-title="Tasks">
+  <ion-content class="content-start">
+     <div class="list card">
+        <a href="">
+          <div class="item item-avatar">
+            <img ng-src="../img/{{showme[0].user}}.jpg">
+            <h2>{{showme[0].user}}</h2>
+            <p>April 17, 2016</p>
+          </div>
+        </a>
+
+        <div class="item item-body">
+          <img class="full-image" src="{{showme[0].image}}">
+          <h2>{{currentItem.title}}</h2>
+          <p>
+            {{currentItem.desc}}
+          </p>
+          
+          <div class="bolt-row money-divide">
+            <div class="small-3 kill-pad columns">
+              <i ng-click="add()" class="ion-plus-round"></i>
+              <span class="money-font">
+                &nbsp;&nbsp;&nbsp;${{showme[0].amount}}
+              </span>
+            </div>
+            <div class="small-1 columns">
+              <i ng-click="subtract()" class="ion-minus-round"></i>
+              
+            </div>
+            
+            <div class="check small-5 columns">
+              <a href="">
+                <i ng-click="accept()" class="ion-checkmark money-font"></i>
+              </a>
+            </div>
+          </div>  
+          <div class="bolt-row">
+            <div class="small-12 columns divide-me">
+            Rating: <i class="ion-star"></i>
+            <i class="ion-star"></i>
+            <i class="ion-star"></i>
+            <i class="ion-star"></i>
+            <br><br>
+            Description: {{showme[0].desc}}
+            </div>
+          </div>
+          
+        </div>
+
+</div>
+  </ion-content>
+</ion-view>
+
+
+
+ <!-- <h2></h2> -->

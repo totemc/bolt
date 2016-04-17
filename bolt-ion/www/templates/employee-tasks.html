@@ -1,31 +1,23 @@
 <ion-view view-title="Tasks">
   <ion-content class="content-start">
-    <div class="task-wrapper bolt-row">
-      <div class="task-picture-wrapper small-2 medium-2 columns">
-        <img class="task-picture" src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_March_2010-1.jpg"/>
-      </div>
-      <div class="description-wrapper icon-size small-1 medium-1 columns">
-        <div class="description">
-          <i class="ion-model-s">
-          </i>
-        </div>
-      </div>
-      
-      <div class="price-wrapper small-4 medium-4 columns">
-        <div class="price">
-        $40
-          <!-- {{task.attributes.amount}}   -->
-        </div>
-      </div>
-      <div class="small-5 medium-5 columns description-wrapper">
-        <div class="description">
-         go there
-        </div>
-     
-        <!-- {{task.attributes.desc}} -->
+  <a ng-href="#tab/task/{{task.id}}" class="task-link" ng-repeat="task in taskz">
+   <div class="task-wrapper bolt-row" ng-class="task.attributes.category">
+    <div class="task-picture-wrapper small-3 medium-4 columns">
+      <img class="task-picture" ng-src="{{task.attributes.image}}"/>
+    </div>
+    <div class="price-wrapper small-1 medium-4 columns">
+      <div class="price">
+        {{task.attributes.amount}}  
       </div>
     </div>
-  </div>
+    <div class="small-6 medium-4 columns description-wrapper">
+      <div class="description">
+      {{task.attributes.title}}
+      </div>
+    </div>
+   </div>
+   </div>
+   </a>
 
 
    
