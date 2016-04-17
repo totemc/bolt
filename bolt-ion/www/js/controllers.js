@@ -364,6 +364,53 @@ angular.module('starter.controllers', [])
       console.log("before enter");
       $scope.employeeRefresh();   
   })
+
+  // Render modal
+  $ionicModal.fromTemplateUrl('templates/filterModal.html', {
+      focusFirstInput: true,
+      scope: $scope
+  }).then(function(modal) {
+      $scope.modal = modal;
+  });
+
+  $scope.openFilter = function(){
+      $scope.modal.show();
+  }
+
+  $scope.close = function (){
+    $scope.modal.hide();
+    console.log($scope.filter);
+    $scope.employeeRefresh();
+  }
+
+  $scope.$on('$ionicView.beforeEnter', function () {
+      $scope.redraw();   
+  })
+
+  $scope.filterCategory = function(task){
+
+      if($scope.filter.category == 'All'){
+        return true;
+      }
+      else if(task.attributes.category == $scope.filter.category){
+        return true;
+      } else {
+        return false;
+      }      
+  }
+
+
+  var current_location = new Parse.GeoPoint({
+    latitude: 25.777680,
+    longitude: -80.190128
+  });
+
+  var query = new Parse.Query('boltTask');
+
+  $scope.filter = {distance: 20, category: 'All'};
+
+  query.withinMiles('point', current_location, $scope.filter.distance);
+
   $scope.employeeRefresh = function(){
   var allTasks = [];
   var query = new Parse.Query('boltTask');
@@ -448,6 +495,14 @@ angular.module('starter.controllers', [])
 
   console.log("user");
   $scope.currentUser = Parse.User.current();
+
+  $scope.$on('$ionicView.beforeEnter', function () {
+      console.log("before enter");
+      $scope.currentUser.fetch();
+      console.log("before enter");
+  })
+
+  
   $scope.message = {
     from: $scope.currentUser.get('username'),
     text: '',
