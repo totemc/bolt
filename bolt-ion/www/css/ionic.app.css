@@ -122,6 +122,9 @@ $dark:                            #444 !default;
 .technical {
   background-color: rgba(29, 176, 190, 0.69); }
 
+.pets {
+  background-color: rgba(20, 176, 190, 0.69); }
+
 /*Styles used later on for task cards*/
 .card-title {
   font-size: 2em;
@@ -130,6 +133,25 @@ $dark:                            #444 !default;
   margin-left: 5px;
   margin-right: 5px;
   background-color: red; }
+
+.check {
+  text-align: right; }
+
+.money-font {
+  color: green;
+  font-size: 1.2em;
+  font-weight: 600; }
+
+.divide-me {
+  border-style: solid;
+  border-top: 1px solid #D0C5C5;
+  padding: 10px 0px; }
+
+.money-divide {
+  padding: 10px 0px; }
+
+.kill-pad {
+  padding: 0 !important; }
 
 meta.foundation-version {
   font-family: "/5.5.3/"; }
