@@ -141,6 +141,7 @@ angular.module('starter.controllers', [])
 
   $scope.inProgressFilter = function(item){
     if(item.get('status') == 'inProgress'){
+      console.log("inprogress");
       return true;
     } 
     else {
@@ -217,11 +218,11 @@ angular.module('starter.controllers', [])
     obj.save().then(function(obj) {
       console.log("New task saved successfully.");
       console.log(obj);
+      $scope.redraw();
+      $scope.modal.hide();
     }, function(err) {
       console.log(err); 
     }); 
-    $scope.modal.hide();
-    $scope.redraw();
   }
 
 })
@@ -332,18 +333,19 @@ angular.module('starter.controllers', [])
     query.get(holdme, {
       success: function(task) {
         console.log("reat");
-        var ass = $scope.showme[0].amount;
-        ass = ass+'';
-        console.log(ass);
+        var bargain = $scope.showme[0].amount;
+        bargain = bargain+'';
+      
         if($scope.showme[0].bargain_amount == "0"){
           task.set("status", "inProgress");
+          console.log(task.get('status'));
         }
         task.set("accepted_by", Parse.User.current().get('username'));
         task.set("bargain_amount", ass);
         task.save(null, {
           success: function(data) {
               console.log(data);
-              $state.go('tab.employee-home');
+              $state.go('tab.my-jobs');
               console.log("giongabck");
           }
         });
@@ -365,6 +367,8 @@ angular.module('starter.controllers', [])
       $scope.employeeRefresh();   
   })
 
+  
+
   // Render modal
   $ionicModal.fromTemplateUrl('templates/filterModal.html', {
       focusFirstInput: true,
@@ -380,7 +384,7 @@ angular.module('starter.controllers', [])
   $scope.close = function (){
     $scope.modal.hide();
     console.log($scope.filter);
-    $scope.employeeRefresh();
+    $scope.redraw();
   }
 
   $scope.$on('$ionicView.beforeEnter', function () {
@@ -400,16 +404,16 @@ angular.module('starter.controllers', [])
   }
 
 
-  var current_location = new Parse.GeoPoint({
-    latitude: 25.777680,
-    longitude: -80.190128
-  });
+  // var current_location = new Parse.GeoPoint({
+  //   latitude: 25.777680,
+  //   longitude: -80.190128
+  // });
 
-  var query = new Parse.Query('boltTask');
+  // var query = new Parse.Query('boltTask');
 
-  $scope.filter = {distance: 20, category: 'All'};
+  // $scope.filter = {distance: 20, category: 'All'};
 
-  query.withinMiles('point', current_location, $scope.filter.distance);
+  // query.withinMiles('point', current_location, $scope.filter.distance);
 
   $scope.employeeRefresh = function(){
   var allTasks = [];
@@ -542,18 +546,108 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('jobsCtrl', function($scope, $location) {
+.controller('jobsCtrl', function($scope, $location, $ionicModal) {
   console.log("i am ");
   console.log(Parse.User.current().get('username'));
   $scope.progressTasks = [];
   $scope.completedTasks = [];
   $scope.$on('$ionicView.beforeEnter', function () {
       console.log("before enter");
+      $scope.allTasks = [];
+      var query = new Parse.Query('boltTask');
+      query.find({
+        success: function(results) {
+          console.log("Successfully retrieved " + results.length);
+          // Do something with the returned Parse.Object values
+          for (var i = 0; i < results.length; i++) {
+            var obj = results[i];
+            if(results[i].attributes.status == "submitted"){
+            $scope.allTasks.push(results[i]);
+            }
+            console.log();
+          }
+          console.log($scope.allTasks);
+          $scope.taskz = $scope.allTasks;
+          
+        },
+        error: function(error) {
+        console.log("Error: " + error.code + " " + error.message);
+        }
+      });
       $scope.redraw();   
   })
-  $scope.goToTaskDetail = function(id){
-    console.log(id);
-    $location.path('/tab/my-jobs/'+id);
+
+  
+  //Render modal
+  $ionicModal.fromTemplateUrl('templates/filterModal.html', {
+      focusFirstInput: true,
+      scope: $scope
+  }).then(function(modal) {
+      $scope.modal = modal;
+  });
+
+  $scope.openFilter = function(){
+      $scope.modal.show();
+  }
+
+  $scope.close = function (){
+    $scope.modal.hide();
+    console.log($scope.filter);
+    
+  }
+
+  $scope.filterCategory = function(task){
+
+      if($scope.filter.category == 'All'){
+        return true;
+      }
+      else if(task.attributes.category == $scope.filter.category){
+        return true;
+      } else {
+        return false;
+      }      
+  }
+
+
+  var current_location = new Parse.GeoPoint({
+    latitude: 25.777680,
+    longitude: -80.190128
+  });
+
+  var query = new Parse.Query('boltTask');
+
+  $scope.filter = {distance: 20000, category: 'All'};
+
+  query.withinMiles('point', current_location, $scope.filter.distance);
+
+
+
+  $scope.shown0 = true;
+  $scope.shown1 = true;
+  $scope.shown2 = true;
+  $scope.toggleShow = function(id){
+    
+    if(id == 1){
+      $scope.shown1 = !$scope.shown1;   
+    } 
+
+    else if (id == 2){
+      $scope.shown2 = !$scope.shown2;
+    }
+    else if (id == 0){
+      $scope.shown0 = !$scope.shown0;
+      console.log($scope.allTasks);
+    }
+   
+  }
+  $scope.goToTaskDetail = function(section,id){
+    if(section == 'open'){
+      $location.path('/tab/task/'+id);
+    }
+    else {
+      console.log(id);
+      $location.path('/tab/my-jobs/'+id);
+    }
   }
   $scope.redraw = function(){
     $scope.progressTasks = [];
@@ -587,14 +681,63 @@ angular.module('starter.controllers', [])
   }
   console.log("priting");
 
+  //from eployee
+    // $scope.$on('$ionicView.beforeEnter', function () {
+    //     console.log("before enter");
+    //     $scope.employeeRefresh();   
+    // })
+
+    
+
+    // Render modal
+    // $ionicModal.fromTemplateUrl('templates/filterModal.html', {
+    //     focusFirstInput: true,
+    //     scope: $scope
+    // }).then(function(modal) {
+    //     $scope.modal = modal;
+    // });
+
+    // $scope.openFilter = function(){
+    //     $scope.modal.show();
+    // }
+
+    // $scope.close = function (){
+    //   $scope.modal.hide();
+    //   console.log($scope.filter);
+    //   $scope.employeeRefresh();
+    // }
+
+    // $scope.$on('$ionicView.beforeEnter', function () {
+    //     $scope.redraw();   
+    // })
+
+    // $scope.filterCategory = function(task){
+
+    //     if($scope.filter.category == 'All'){
+    //       return true;
+    //     }
+    //     else if(task.attributes.category == $scope.filter.category){
+    //       return true;
+    //     } else {
+    //       return false;
+    //     }      
+    // }
+
+
+    // var current_location = new Parse.GeoPoint({
+    //   latitude: 25.777680,
+    //   longitude: -80.190128
+    // });
+
+    // var query = new Parse.Query('boltTask');
+
+    // $scope.filter = {distance: 20, category: 'All'};
+
+    // query.withinMiles('point', current_location, $scope.filter.distance);
+
 })
 
 .controller('jobCardCtrl', function($scope, $stateParams, $state, $ionicHistory, $ionicModal) {
-
-
-
-
-
 
   console.log($stateParams);
   $scope.cardTask = $stateParams.id;
@@ -602,14 +745,14 @@ angular.module('starter.controllers', [])
   var local_card = $scope.cardTask;
   $scope.singleCardTask =[];
   $scope.saveHelper;
+  $scope.singleTask = {};
   
   var query = new Parse.Query('boltTask');
   query.get($stateParams.id, {
     success: function(object) {
-      console.log("eyo")
-      console.log(object);
+      $scope.singleTask = object;
+      console.log($scope.singleTask);
       $scope.singleCardTask.push(object);
-      
       if(object.get("status") == "completed"){
         $scope.trueOrNot = true;
       }
@@ -658,6 +801,17 @@ angular.module('starter.controllers', [])
      $scope.completeTask = function(){
         $scope.modal2.show();
         $scope.modalInit.hide();
+        console.log($scope.singleTask.get('user') + ' pays ' + $scope.singleTask.get('amount') + ' to ' + Parse.User.current().get('username'));
+        var TransactionObject = Parse.Object.extend("transaction");
+         var transactionObject = new TransactionObject();
+           transactionObject.save({from: $scope.singleTask.get('user'), "to": Parse.User.current().get('username'), "amount": parseInt($scope.singleTask.get('amount')), "status": "In Progress"}, {
+           success: function(object) {
+             
+           },
+           error: function(model, error) {
+             console.log(error);
+           }
+         });
       }
 
      $scope.noThanks = function(){
@@ -731,6 +885,20 @@ angular.module('starter.controllers', [])
           }
         }
         // End of Adrian Functions
+        $scope.$on('$destroy', function() {
+          console.log('Removing and recreating the modal!');
+          $scope.modal2.remove();
+          if (!$scope.modal2){
+            console.log("youre good to create one!");
+            $ionicModal.fromTemplateUrl('templates/taskCompleteModal.html', {
+              focusFirstInput: true,
+              scope: $scope
+            }).then(function(modal) {
+              $scope.modal2 = modal;
+            })
+          }
+        });
+
   $scope.finish = function(){
     var Task = Parse.Object.extend("boltTask");
     var query = new Parse.Query(Task);

@@ -14,14 +14,14 @@
       </ion-item> 
       <div class="card">
         <div class="item item-text-wrap">
-          Rating: <i class="ion-star"></i><i class="ion-star"></i><i class="ion-star"></i>
+          <b>Rating</b>: <i class="ion-star"></i><i class="ion-star"></i><i class="ion-star"></i>
           <!-- <rating ng-model="data.rating" max="data.max"></rating> -->
         </div>
         <div class="item item-text-wrap">
-          Biography: {{currentUser.get('bio')}}
+          <b>Biography</b>: {{currentUser.get('bio')}}
         </div>
         <div class="item item-text-wrap">
-          Balance: {{currentUser.get('balance')}}
+          <b>Balance</b>: ${{currentUser.get('balance')}}
         </div>
       </div>
       <button class="button button-block button-assertive" ng-click="logout()">Log Out</button>
