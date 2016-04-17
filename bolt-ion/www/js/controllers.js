@@ -455,7 +455,12 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('jobCardCtrl', function($scope, $stateParams, $state, $ionicHistory) {
+.controller('jobCardCtrl', function($scope, $stateParams, $state, $ionicHistory, $ionicModal) {
+
+
+
+
+
 
   $scope.cardTask = $stateParams.id;
   console.log($scope.cardTask);
@@ -497,6 +502,99 @@ angular.module('starter.controllers', [])
       console.log("nahman");
     }
   });
+  // Adrian Functions
+    $ionicModal.fromTemplateUrl('templates/taskCompleteModal.html', {
+      focusFirstInput: true,
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modal2 = modal;
+    })
+
+    $ionicModal.fromTemplateUrl('templates/areYouSure.html', {
+      focusFirstInput: true,
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modalInit = modal;
+    })
+    $scope.openCompleteModal = function(){
+         $scope.modalInit.show();
+     }
+     $scope.completeTask = function(){
+        $scope.modal2.show();
+        $scope.modalInit.hide();
+      }
+
+     $scope.noThanks = function(){
+        $scope.modal2.hide();
+      }
+
+     $scope.close2 = function(){
+        $scope.modal2.hide();
+      }
+
+     $scope.initViewClose = function(){
+        $scope.modalInit.hide();
+      }
+        $scope.clearIt = function (){
+          for (var i = 1; i <= 5 ; i++){
+            var star = 'star' + i;
+            var lol = angular.element(document.getElementById(star));
+            lol.removeClass('ion-ios-star-outline');
+          }
+        }
+        $scope.star1 = function (){
+          var lol = angular.element(document.getElementById('star1'));
+          lol.addClass('ion-ios-star');
+          for (var i = 2; i <= 5; i++){
+            var star = 'star' + i;
+            var lol = angular.element(document.getElementById(star));
+            lol.addClass('ion-ios-star-outline');
+          }
+        }
+        $scope.star2 = function (){
+          for (var i = 1; i <=2; i++){
+            var star = 'star' + i;
+            var lol = angular.element(document.getElementById(star));
+            lol.addClass('ion-ios-star');
+          }
+          for (var i = 3; i <= 5; i++){
+            var star = 'star' + i;
+            var lol = angular.element(document.getElementById(star));
+            lol.addClass('ion-ios-star-outline');
+          }
+        }
+        $scope.star3 = function (){
+          for (var i = 1; i <=3; i++){
+            var star = 'star' + i;
+            var lol = angular.element(document.getElementById(star));
+            lol.addClass('ion-ios-star');
+          }
+          for (var i = 4; i <= 5; i++){
+            var star = 'star' + i;
+            var lol = angular.element(document.getElementById(star));
+            lol.addClass('ion-ios-star-outline');
+          }
+        }
+        $scope.star4 = function (){
+          for (var i = 1; i <=4; i++){
+            var star = 'star' + i;
+            var lol = angular.element(document.getElementById(star));
+            lol.addClass('ion-ios-star');
+          }
+          for (var i = 5; i <= 5; i++){
+            var star = 'star' + i;
+            var lol = angular.element(document.getElementById(star));
+            lol.addClass('ion-ios-star-outline');
+          }
+        }
+        $scope.star5 = function (){
+          for (var i = 1; i <=5; i++){
+            var star = 'star' + i;
+            var lol = angular.element(document.getElementById(star));
+            lol.addClass('ion-ios-star');
+          }
+        }
+        // End of Adrian Functions
   $scope.finish = function(){
     var Task = Parse.Object.extend("boltTask");
     var query = new Parse.Query(Task);
