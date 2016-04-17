@@ -1,5 +1,6 @@
-<ion-view view-title="Login">
-   <ion-content class="padding">
+<ion-view view-title="Login" cache-view="false">
+   <ion-content class="padding" id="login-wrapper">
+   <div class="login-content">
           <label class="item item-input">
             <span class="input-label">Username</span>
             <input type="text" ng-model="loginData.username">
@@ -11,11 +12,14 @@
           <label class="item">
             <button class="button button-block button-positive" ng-click="loadView(type)">Log in</button>
           </label>
-          <button class="button button-clear button-positive">
-            Can't log in?
-          </button>
-          <button class="button button-clear button-positive">
-            Don't have an account?
-          </button>
+          <div class="button-login-wrapper">
+            <button class="button button-clear button-positive">
+              Can't log in?
+            </button>
+            <button class="button button-clear button-positive">
+              Don't have an account?
+            </button>
+          </div>
+        </div>
     </ion-content>
 </ion-view>

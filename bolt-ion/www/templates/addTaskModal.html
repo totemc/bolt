@@ -3,31 +3,51 @@
         <div class="buttons">
             <button class="button button-clear" type="button" ng-click="closeNewTask()">Close</button>
         </div>
-        <h1 class="title">Add task</h1>
+        <h1 class="title">Message</h1>
         <div class="buttons">
            <button class="button button-clear" type="button" ng-click="saveNewTask(item)">Save</button>
         </div>
     </ion-header-bar>
     <ion-content>
+    <div class="task-list">
         <label class="item item-input item-stacked-label">
             <span class="input-label">Title</span>
-            <input type="text" ng-model="newTask.title" placeholder="Pick up groceries, deposit my check...">
+            <input id="inputLabel" type="text" ng-model="newTask.title" placeholder="Pick up groceries, deposit my check...">
         </label>
         <label class="item item-input item-stacked-label">
             <span class="input-label">Description</span>
-            <input type="text" ng-model="newTask.desc" placeholder="Looking for someone to pick up my suit...">
+            <input id="inputLabel" type="text" ng-model="newTask.desc" placeholder="Looking for someone to pick up my suit...">
         </label>
         <label class="item item-input item-stacked-label">
             <span class="input-label">Price</span>
-            <input type="text" ng-model="newTask.amount" placeholder="Looking for someone to pick up my suit...">
+            <input id="inputLabel" type="tel" ng-model="newTask.amount" placeholder="Looking for someone to pick up my suit...">
         </label>
         <label class="item item-input item-stacked-label">
-            <span class="input-label">category</span>
-            <input type="text" ng-model="newTask.category" placeholder="Looking for someone to pick up my suit...">
+            <div class = "input-label">
+                  Category
+               </div>
+                
+               <select ng-model="newTask.category">
+                  <option>Pickup / Dropoff</option>
+                  <option>Chores</option>
+                  <option>Pets</option>
+                  <option>Technical</option>
+               </select>
+               <i class="ion-chevron-down"></i>
+            </label>
         </label>
         <label class="item item-input item-stacked-label">
             <span class="input-label">Image</span>
-            <input type="text" ng-model="newTask.image" placeholder="Looking for someone to pick up my suit...">
+            <input id="inputLabel" type="text" ng-model="newTask.image" placeholder="Looking for someone to pick up my suit...">
         </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Zip</span>
+            <input id="inputLabel" type="text" ng-model="newTask.zip" placeholder="33182">
+        </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Location</span>
+            <input id="inputLabel" type="text" ng-model="newTask.location" placeholder="Miami, Doral, NYC...">
+        </label>
+    </div>
     </ion-content>
 </ion-modal-view>
