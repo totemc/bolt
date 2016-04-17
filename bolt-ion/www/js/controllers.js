@@ -487,7 +487,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('jobsCtrl', function($scope) {
+.controller('jobsCtrl', function($scope, $location) {
   console.log("i am ");
   console.log(Parse.User.current().get('username'));
   $scope.progressTasks = [];
@@ -496,6 +496,10 @@ angular.module('starter.controllers', [])
       console.log("before enter");
       $scope.redraw();   
   })
+  $scope.goToTaskDetail = function(id){
+    console.log(id);
+    $location.path('/tab/my-jobs/'+id);
+  }
   $scope.redraw = function(){
     $scope.progressTasks = [];
     $scope.completedTasks = [];
@@ -532,16 +536,18 @@ angular.module('starter.controllers', [])
 
 .controller('jobCardCtrl', function($scope, $stateParams, $state, $ionicHistory) {
 
+  console.log($stateParams);
   $scope.cardTask = $stateParams.id;
   console.log($scope.cardTask);
   var local_card = $scope.cardTask;
   $scope.singleCardTask =[];
   $scope.saveHelper;
-  console.log(local_card);
+  
   var query = new Parse.Query('boltTask');
-  query.get(local_card, {
+  query.get($stateParams.id, {
     success: function(object) {
       console.log("eyo")
+      console.log(object);
       $scope.singleCardTask.push(object);
       
       if(object.get("status") == "completed"){
