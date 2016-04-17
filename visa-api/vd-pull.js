@@ -8,16 +8,16 @@ var data = JSON.stringify({
     "localTransactionDateTime" : "2016-04-16T14:39:47",
     "acquiringBin" : "408999",
     "acquirerCountryCode" : "840",
-    "senderPrimaryAccountNumber" : "4895142232120006",
-    "senderCardExpiryDate" : "2015-10",
+    "senderPrimaryAccountNumber" : "4005520000011126",
+    "senderCardExpiryDate" : "2020-03",
     "senderCurrencyCode" : "USD",
-    "amount" : "124.02",
+    "amount" : "100",
     "businessApplicationId" : "AA",
     "surcharge" : "11.99",
     "foreignExchangeFeeTransaction" : "11.99",
     "cavv" : "0700100038238906000013405823891061668252",
     "cardAcceptor" : {
-        "name" : "Visa Inc. USA-Foster City",
+        "name" : "Acceptor 1",
         "terminalId" : "ABCD1234",
         "idCode" : "ABCD1234ABCD123",
         "address" : {
@@ -29,9 +29,9 @@ var data = JSON.stringify({
     }
 });
 
-var userId = '1JU5YLFNJP0ISHOWB4RL21rjbOfWnkbbE09d06EKCMQcIVcQs';
-var password = 'BBlUAZ1kcNEYZFB738K6Z';
-var keyFile = 'certificates/key_Bolt.pem';
+var userId = 'QJUI3JU0W767AC7HGV6O21RfUVJUd1EwdTix4YEMGAuvztgbo';
+var password = 'VwYHk3OtSLNmFYAhmCK5';
+var keyFile = 'certificates/key_bolt2.pem';
 var certificateFile ='certificates/cert.pem';
 
 req.post({
