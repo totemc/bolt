@@ -112,6 +112,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
+  .state('tab.my-jobs',{
+    url: '/jobs',
+    views:{
+      'tab-dash':{
+        templateUrl: 'templates/my-jobs.html',
+        controller: 'jobsCtrl'
+      }
+    }
+  })
+
+  .state('tab.my-jobs-detail',{
+    url: '/my-jobs/:id',
+    views:{
+      'tab-dash':{
+        templateUrl: 'templates/card-task.html',
+        controller: 'jobCardCtrl'
+      }
+    }
+  })
+
   .state('tab.task',{
     url: '/task/:id',
     views:{
