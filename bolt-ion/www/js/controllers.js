@@ -65,7 +65,7 @@ angular.module('starter.controllers', [])
       success: function(user) {
         // Do stuff after successful login.
         if(user.get('type') == 'employee'){
-            $state.go('tab.employee-home');
+            $state.go('tab.my-jobs');
         } else {
             $state.go('tab.dash')
         }
@@ -264,7 +264,7 @@ angular.module('starter.controllers', [])
 })
 
 // Controller for task-onclick  
-.controller('taskOnClick', function($scope, $location, $state, $stateParams) {
+.controller('taskOnClick', function($scope, $location, $state, $stateParams, $ionicHistory) {
   $scope.showTask = $stateParams.id;
   var holdme = $scope.showTask;
   $scope.singleTask =[];
@@ -323,6 +323,8 @@ angular.module('starter.controllers', [])
         task.save(null, {
           success: function(data) {
               console.log(data);
+              $state.go('tab.employee-home');
+              console.log("giongabck");
           }
         });
       },
@@ -339,7 +341,12 @@ angular.module('starter.controllers', [])
 })
 
 // Get the Tasks
-.controller('EmployeeCtrl', function($scope, $stateParams){
+.controller('EmployeeCtrl', function($scope, $stateParams, $location, $state, $ionicModal){
+  $scope.$on('$ionicView.beforeEnter', function () {
+      console.log("before enter");
+      $scope.employeeRefresh();   
+  })
+  $scope.employeeRefresh = function(){
   var allTasks = [];
   var query = new Parse.Query('boltTask');
   query.find({
@@ -349,7 +356,10 @@ angular.module('starter.controllers', [])
       // Do something with the returned Parse.Object values
       for (var i = 0; i < results.length; i++) {
         var obj = results[i];
+        if(results[i].attributes.status == "submitted"){
         allTasks.push(results[i]);
+
+        }
         console.log();
 
       }
@@ -363,7 +373,7 @@ angular.module('starter.controllers', [])
   });
   
   console.log("priting");
-
+}
 })
 
 .controller('profileCtrl', function($scope, $stateParams, $state, $ionicModal){
@@ -402,8 +412,116 @@ angular.module('starter.controllers', [])
 
 })
 
+.controller('jobsCtrl', function($scope) {
+  console.log("i am ");
+  console.log(Parse.User.current().get('username'));
+  $scope.progressTasks = [];
+  $scope.completedTasks = [];
+  $scope.$on('$ionicView.beforeEnter', function () {
+      console.log("before enter");
+      $scope.redraw();   
+  })
+  $scope.redraw = function(){
+    $scope.progressTasks = [];
+    $scope.completedTasks = [];
+    var query = new Parse.Query('boltTask');
+    query.find({
+      success: function(results) {
+        console.log("Successfully retrieved " + results.length);
+        console.log(results);
+        // Do something with the returned Parse.Object values
+        for (var i = 0; i < results.length; i++) {
+          if(results[i].attributes.status == "completed" && results[i].attributes.accepted_by == Parse.User.current().get('username')){
+            $scope.completedTasks.push(results[i]);
+          }
+          if(results[i].attributes.accepted_by == Parse.User.current().get('username') && results[i].attributes.status == "inProgress"){
+            console.log("jaimebro");
+            $scope.progressTasks.push(results[i]);
 
+          }
+        }
+        console.log("here are the tasks in progression");
+        console.log($scope.progressTasks);
+        $scope.$apply();
+        
+        
+      },
+      error: function(error) {
+      console.log("Error: " + error.code + " " + error.message);
+      }
+    });
+  }
+  console.log("priting");
 
+})
+
+.controller('jobCardCtrl', function($scope, $stateParams, $state, $ionicHistory) {
+
+  $scope.cardTask = $stateParams.id;
+  console.log($scope.cardTask);
+  var local_card = $scope.cardTask;
+  $scope.singleCardTask =[];
+  $scope.saveHelper;
+  console.log(local_card);
+  var query = new Parse.Query('boltTask');
+  query.get(local_card, {
+    success: function(object) {
+      console.log("eyo")
+      $scope.singleCardTask.push(object);
+      
+      if(object.get("status") == "completed"){
+        $scope.trueOrNot = true;
+      }
+      else{
+        $scope.trueOrNot = false;
+      }
+      $scope.muestra = [{
+        "desc": object.get("desc"),
+        "title": object.get("title"),
+        "amount": object.get("amount"),
+        "employer": object.get("employer_rating"),
+        "user": object.get("user"),
+        "image": object.get("image"),
+        "bargain_amount": object.get("bargain_amount"),
+        "accepted_by": object.get("accepted_by"),
+        "status": object.get("status")
+      }]
+
+      $scope.saveHelper = $scope.muestra;
+      console.log($scope.singleCardTask);
+      
+    },
+
+    error: function(object, error) {
+      // error is an instance of Parse.Error.
+      console.log("nahman");
+    }
+  });
+  $scope.finish = function(){
+    var Task = Parse.Object.extend("boltTask");
+    var query = new Parse.Query(Task);
+    query.get(local_card, {
+      success: function(task) {
+        console.log("BREEEE");
+        
+        task.set("status", "completed");
+        
+        task.save(null, {
+          success: function(data) {
+              console.log(data);
+              console.log("Saved Successfully");
+              $state.go('tab.my-jobs');
+              
+          }
+        });
+      },
+      error: function(object, error) {
+        // The object was not retrieved successfully.
+        // error is a Parse.Error with an error code and message.
+      }
+    });
+  }
+})
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {

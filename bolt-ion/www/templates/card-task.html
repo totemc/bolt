@@ -1,0 +1,40 @@
+<ion-view view-title="Tasks" cache-view="false">
+  <ion-content class="content-start">
+     
+          <div class="list card sedanos">
+            <p class="text-center one-task-title">
+            	{{singleCardTask[0].attributes.title}}
+            </p>
+
+             <div class="item item-body kill-pad">
+               <img class="full-image" src="{{singleCardTask[0].attributes.image}}">
+               <h2>{{currentItem.title}}</h2>
+               <p>
+                 {{currentItem.desc}}
+               </p>
+               
+               
+               <div class="bolt-row">
+	            
+                 <div class="small-12 columns divide-me text-center due-text">
+                 Due By: April 18, 2016
+                 
+                 <br><br>
+                 
+                 </div>
+                 <div class="small-12 small-centered search-jobs-wrapper columns">
+                 	<div ng-click="finish()" ng-if="!(trueOrNot)" class="emerald-flat-button search-jobs">Finish</div>
+                 	<div ng-click="finish()" ng-if="trueOrNot" class="emerald-flat-button search-jobs">Completed</div>
+
+                 </div>
+               </div>
+               
+             </div>
+
+     		</div>
+  </ion-content>
+</ion-view>
+
+
+
+ <!-- <h2></h2> -->
