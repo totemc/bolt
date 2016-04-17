@@ -1,3 +1,20 @@
-# bolt
+# Bolt
+## Work while you work
 
-Martin
+##Technologies
+Ionic
+MongoDB
+Parse Server
+
+##Open Source Parse Instance
+https://github.com/totoromano/bolt-server
+
+##Team Members
+Adrian Rodriguez
+
+Claudio Romano
+
+Jaime Acevedo
+
+Martin Didiego
+
