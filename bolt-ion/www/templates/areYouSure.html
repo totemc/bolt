@@ -1,0 +1,31 @@
+<ion-modal-view>    
+    <ion-header-bar>
+        <div class="buttons">
+            <button class="button button-clear" type="button" ng-click="initViewClose()">Close</button>
+        </div>
+        <h1 class="title">Add task</h1>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="card text-center">
+        <div class="small-12 columns">
+          <h1>Complete task?</h1>
+        </div>
+        <div class="small-12 columns">
+            <h4>are you sure you want to complete the task?</h4>
+        </div>
+          <div class="row text-center">
+              <div class="small-6 columns">
+                  <button class="button button-block button-assertive" ng-click="initViewClose()">
+                      <i class="ion-close-round"></i>
+                  </button>
+              </div>
+              <div class="small-6 columns">
+                  <button class="button button-block button-balanced" ng-click="completeTask()">
+                      <i class="ion-checkmark"></i>
+                  </button>
+              </div>
+          </div>
+        </div>
+        
+    </ion-content>
+</ion-modal-view>
