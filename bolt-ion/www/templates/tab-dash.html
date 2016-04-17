@@ -3,31 +3,59 @@
       <a class="button button-icon icon ion-plus" ng-click="addNewTask()"></a>
     </ion-nav-buttons>
   <ion-content class="padding">
-  <h2>Submitted</h2>
 
+
+
+  <div class="list list-inset search-wrapper">
+    <label class="item item-input">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input id="inputLabel" type="text" ng-model="query.text" placeholder="Search">
+    </label>
+  </div>
+
+
+  <div class="list card">
+    <div class="item item-avatar home-heading bar bar-energized">
+      <h2>Submitted</h2>
+
+    </div>
+    <div class="item item-body">
     <ul class="list tasks-in-progress">
-      <li ng-repeat="item in taskList | filter:submittedFilter" 
+      <li ng-repeat="item in taskList | filter:submittedFilter | filter:searchFilter" 
           ng-click="goToTaskDetail(item)" class="item">
           {{item.get('title')}}
           <i class="ion-chevron-right"></i>
       </li>
     </ul>
+    </div>
+  </div>
 
-    <h2>In progress</h2>
-
+  <div class="list card">
+    <div class="item item-avatar home-heading bar bar-calm">
+      <h2>In Progress</h2>
+    </div>
+    <div class="item item-body">
       <ul class="list tasks-in-progress">
-        <li ng-repeat="item in taskList | filter:inProgressFilter" 
+        <li ng-repeat="item in taskList | filter:inProgressFilter | filter:searchFilter" 
             ng-click="goToTaskDetail(item)" class="item">
             {{item.get('title')}}
             <i class="ion-chevron-right"></i>
         </li>
       </ul>
-
-    <h2>Completed</h2>
-    <ul class="list tasks-in-progress">
-      <li ng-repeat="item in taskList | filter:completedFilter" ng-click="goToTaskDetail({{item}})"  class="item">
-      {{item.get('title')}}
-      <i class="ion-chevron-right"></i></li>
-    </ul>
+    </div>
+  </div>
+      
+  <div class="list card">
+    <div class="item item-avatar home-heading bar bar-balanced">
+      <h2>Completed</h2>
+    </div>
+    <div class="item item-body">
+      <ul class="list tasks-in-progress">
+        <li ng-repeat="item in taskList | filter:completedFilter | filter:searchFilter" ng-click="goToTaskDetail({{item}})"  class="item">
+        {{item.get('title')}}
+        <i class="ion-chevron-right"></i></li>
+      </ul>
+    </div>
+  </div>
   </ion-content>
 </ion-view>

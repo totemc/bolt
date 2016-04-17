@@ -13,23 +13,23 @@ angular.module('starter.services', [])
     face: 'img/ben.png'
   }, {
     id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
+    name: 'Jaime Acevedo',
+    lastText: 'Just finised your task!',
+    face: 'img/jaime.jpg'
   }, {
     id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
+    name: 'Adrian Rodriguez',
+    lastText: 'Where do I drop off your groceries?',
+    face: 'img/adrian.jpg'
   }, {
     id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
+    name: 'Martin Di Diego',
+    lastText: 'I heard you needed a fixed computer..',
+    face: 'img/martin.jpg'
   }, {
     id: 4,
     name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
+    lastText: 'I love Bolt!',
     face: 'img/mike.png'
   }];
 

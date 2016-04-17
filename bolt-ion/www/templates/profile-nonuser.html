@@ -1,16 +1,11 @@
 <ion-view view-title="Profile" cache-view="false">
-<ion-nav-buttons side="left">
-  <a class="button button-icon">Edit</a>
-</ion-nav-buttons>
-<ion-nav-buttons side="right">
-  <a class="button button-icon">Account</a>
-</ion-nav-buttons>
+
    <ion-content class="padding">
       <ion-item class="profile-top">
         <div class="profile-photo-wrapper">
-          <img class="profile-photo" ng-src="img/{{currentUser.get('image')}}">
+          <img class="profile-photo" ng-src="img/{{userProfile.get('image')}}">
         </div>
-        <p>{{currentUser.get('username')}}</p> 
+        <p>{{userProfile.get('username')}}</p> 
       </ion-item> 
       <div class="card">
         <div class="item item-text-wrap">
@@ -18,8 +13,13 @@
           <!-- <rating ng-model="data.rating" max="data.max"></rating> -->
         </div>
         <div class="item item-text-wrap">
-          Biography: {{currentUser.get('bio')}}
+          Biography: {{userProfile.get('bio')}}
         </div>
       </div>
       <button class="button button-block button-assertive" ng-click="logout()">Log Out</button>
+
+      <!-- if not same peron -->
+      <button class="button button-block button-positive" ng-click="openMessageModal()">
+        Send Message
+      </button>
 </ion-view>

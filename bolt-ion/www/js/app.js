@@ -92,15 +92,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/profile.html',
-        controller: 'profileCtrl'
+    .state('tab.account', {
+      url: '/account',
+      views: {
+        'tab-account': {
+          templateUrl: 'templates/profile.html',
+          controller: 'profileCtrl'
+        }
       }
-    }
-  })
+    })
 
   .state('tab.employee-home',{
     url: '/home',

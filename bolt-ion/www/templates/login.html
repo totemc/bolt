@@ -1,13 +1,19 @@
 <ion-view view-title="Login" cache-view="false">
    <ion-content class="padding" id="login-wrapper">
    <div class="login-content">
+      <div class="logo-wrapper">
+          <h1>BOLT</h1>
+          <div class="logo-title-wrapper">
+            <i class="ion-flash logo-title"></i>
+          </div>
+      </div>  
+
           <label class="item item-input">
-            <span class="input-label">Username</span>
-            <input type="text" ng-model="loginData.username">
+            <input placeholder="username"  id="inputLabel" type="text" ng-model="loginData.username">
           </label>
           <label class="item item-input">
-            <span class="input-label">Password</span>
-            <input type="password" ng-model="loginData.password">
+            <!-- <span class="input-label">Password</span> -->
+            <input placeholder="password" id="inputLabel" type="password" ng-model="loginData.password">
           </label>
           <label class="item">
             <button class="button button-block button-positive" ng-click="loadView(type)">Log in</button>

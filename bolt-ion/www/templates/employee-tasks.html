@@ -1,6 +1,10 @@
 <ion-view view-title="Tasks">
+<ion-nav-buttons side="right">
+    <a class="button button-icon icon ion-funnel" ng-click="openFilter()"></a>
+  </ion-nav-buttons>
   <ion-content class="content-start">
-  <a ng-href="#tab/task/{{task.id}}" class="task-link" ng-repeat="task in taskz">
+  <a ng-href="#tab/task/{{task.id}}" class="task-link" 
+    ng-repeat="task in taskz | filter:filterCategory as filteredResult">
    <div class="task-wrapper bolt-row" ng-class="task.attributes.category">
     <div class="task-picture-wrapper small-3 medium-4 columns">
       <img class="task-picture" ng-src="{{task.attributes.image}}"/>
@@ -18,10 +22,5 @@
    </div>
    </div>
    </a>
-
-
-   
-     
-
   </ion-content>
 </ion-view>
