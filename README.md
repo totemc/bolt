@@ -4,9 +4,9 @@
 ### Bolt is a mobile and desktop application built during a 24-hour hackathon at the [2016 Emerge Americas Hackathon](http://emergeamericas.com/hackathon/) in Miami, FL.
 
 ## Screenshots
-![Login View](images/screen1.png)
-![Tasks View](images/screen2.png)
-![Task Details View](images/screen3.png)
+<img src="images/screen1.png" width="250">
+<img src="images/screen2.png" width="250">
+<img src="images/screen3.png" width="250">
 
 ##Technologies
 * Ionic
