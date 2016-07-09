@@ -7,6 +7,7 @@
 <img src="images/screen1.png" width="250">
 <img src="images/screen2.png" width="250"><br>
 <img src="images/screen3.png" width="250">
+<img src="images/screen4.png" width="250">
 
 ##Technologies
 * Ionic
